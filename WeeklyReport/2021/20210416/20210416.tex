@@ -1,0 +1,81 @@
+%\documentstyle[epsf,twocolumn]{jarticle}       %LaTeX2.09�d�l
+\documentclass[twocolumn]{jarticle} 
+\setlength{\topmargin}{-45pt}
+%\setlength{\oddsidemargin}{0cm} 
+\setlength{\oddsidemargin}{-7.5mm}
+%\setlength{\evensidemargin}{0cm} 
+\setlength{\textheight}{24.1cm}
+%setlength{\textheight}{25cm} 
+\setlength{\textwidth}{17.4cm}
+%\setlength{\textwidth}{172mm} 
+\setlength{\columnsep}{11mm}
+
+% 【節が変わるごとに (1.1)(1.2) … (2.1)(2.2) と数式番号をつけるとき】
+%\makeatletter
+%\renewcommand{\theequation}{%
+%\thesection.\arabic{equation}} %\@addtoreset{equation}{section}
+%\makeatother
+
+%\renewcommand{\arraystretch}{0.95}行間の設定
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}   %pLaTeX2e仕様(\documentstyle ->\documentclass)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+	%bibtex用の設定
+	%\bibliographystyle{ujarticle}
+
+	\twocolumn[
+		\noindent
+		\hspace{1em}
+		2021 年 4 月 16 日
+		研究会資料
+		\hfill
+		B4	尾關  拓巳
+		\vspace{2mm}
+		\hrule
+		\begin{center}
+			{\Large \bf 進捗報告}
+		\end{center}
+		\hrule
+		\vspace{9mm}
+	]
+
+\section{今週やったこと}
+\begin{itemize}
+  \item 三菱との共同研究の内容確認
+  \item 混合整数非線形最適化問題
+\end{itemize}
+
+
+\section{三菱との共同研究の内容確認}
+高見さんから三菱との共同研究の内容を聞いた．
+
+機械的制約，運用制約を考慮し，電力購入コストとガス購入のコストを最小にするエネルギープラントの運転状態を計画する問題である．今研究ではガスタービン1台，ボイラ1台，ターボ冷凍機1台，蒸気吸収式冷凍機2台の24時刻運用計画を考える．つまるところこの問題は423個の制約条件を有する240変数混合整数非線形最適化問題(Mixed integer nonlinear programming, MINLP)である．
+
+\section{混合整数非線形最適化問題}
+
+\subsection{最適化問題}
+特定の集合上で定義された実数値または整数値関数を最小にする状態を解析する問題である．数理計画問題とも言う．
+
+\subsection{非線型計画法}
+最適化問題のうち，目的関数や制約条件に非線形なものが含まれるものである．
+
+\subsection{混合整数}
+決定変数の一部が整数変数でなければならないという制約を持つことを意味する．
+
+\section{今後の予定}
+% なんとなくなんかの勉強をするとかではなく具体的に
+
+\begin{itemize}
+  \item 最適化問題を解くアイデアを考える
+\end{itemize}
+
+% 参考文献リスト
+
+\end{document}
+
+
+
