@@ -1,0 +1,47 @@
+This is pBibTeX, Version 0.99d-j0.33 (utf8.euc) (TeX Live 2019/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: 20210423.aux
+The style file: junsrt.bst
+Database file #1: hoge.bib
+You've used 4 entries,
+            2270 wiz_defined-function locations,
+            563 strings with 4716 characters,
+and the built_in function-call counts, 1413 in all, are:
+= -- 116
+> -- 28
+< -- 6
++ -- 12
+- -- 8
+* -- 67
+:= -- 158
+add.period$ -- 11
+call.type$ -- 4
+change.case$ -- 4
+chr.to.int$ -- 0
+cite$ -- 4
+duplicate$ -- 92
+empty$ -- 145
+format.name$ -- 16
+if$ -- 359
+int.to.chr$ -- 0
+int.to.str$ -- 4
+missing$ -- 3
+newline$ -- 22
+num.names$ -- 3
+pop$ -- 31
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 83
+stack$ -- 0
+substring$ -- 96
+swap$ -- 36
+text.length$ -- 6
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 10
+width$ -- 5
+write$ -- 42
+is.kanji.str$ -- 41

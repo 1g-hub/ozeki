@@ -1,0 +1,80 @@
+%\documentstyle[epsf,twocolumn]{jarticle}       %LaTeX2.09�d�l
+\documentclass[twocolumn]{jarticle} 
+\setlength{\topmargin}{-45pt}
+%\setlength{\oddsidemargin}{0cm} 
+\setlength{\oddsidemargin}{-7.5mm}
+%\setlength{\evensidemargin}{0cm} 
+\setlength{\textheight}{24.1cm}
+%setlength{\textheight}{25cm} 
+\setlength{\textwidth}{17.4cm}
+%\setlength{\textwidth}{172mm} 
+\setlength{\columnsep}{11mm}
+
+% 【節が変わるごとに (1.1)(1.2) … (2.1)(2.2) と数式番号をつけるとき】
+%\makeatletter
+%\renewcommand{\theequation}{%
+%\thesection.\arabic{equation}} %\@addtoreset{equation}{section}
+%\makeatother
+
+%\renewcommand{\arraystretch}{0.95}行間の設定
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx} %pLaTeX2e仕様(\documentstyle ->\documentclass)
+\usepackage{url}		%参考文献にurlを入れる用
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+	%bibtex用の設定
+	%\bibliographystyle{ujarticle}
+
+	\twocolumn[
+		\noindent
+		\hspace{1em}
+		2021 年 4 月 23 日
+		研究会資料
+		\hfill
+		B4	尾關  拓巳
+		\vspace{2mm}
+		\hrule
+		\begin{center}
+			{\Large \bf 進捗報告}
+		\end{center}
+		\hrule
+		\vspace{9mm}
+	]
+
+\section{今週やったこと}
+\begin{itemize}
+  \item DEAPの調査
+  \item CMA-ESの調査
+\end{itemize}
+
+
+\section{DEAPの調査}
+	\subsection{DEAP}
+	DEAP\cite{DEAP_JMLR2012}はpythonの進化計算ライブラリである．
+
+	\subsection{実装例}
+	先週に森先生から教えてもらったサイト\cite{deap_url}の実装例を動かした．内容としては，遺伝的アルゴリズムを用いてDEAPに入っているベンチマーク関数Ackleyの2次元空間における最小値の探索をした．これはDEAPをインストールするだけで実行できた．
+	
+\section{CMA-ESの調査}
+
+	\subsection{CMA-ES}
+	CMA-ES\cite{542381}は1996年にHansenらが発表した，正規分布の共分散行列を学習するCovariance Matrix Adaptation(CMA)を用いた進化形計算である．変数分離不能，悪スケール，多峰性といった困難さをもつ連続最適化問題に対して効率的な探索ができる．
+	\subsection{設計原理と理論的基盤}
+	森先生からいただいた資料\cite{akimoto2016}を読んだが，用語や数式の書き方など，わからない点が非常に多くあまり理解できなかった．
+
+	
+\section{今後の予定}
+% なんとなくなんかの勉強をするとかではなく具体的に
+
+\begin{itemize}
+  \item CMA-ESの実装例を動かす
+\end{itemize}
+
+% 参考文献
+\bibliography{hoge}				%hogeはbibファイルのファイル名
+\bibliographystyle{junsrt}		%順番に表示
+
+\end{document}

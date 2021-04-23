@@ -1,0 +1,26 @@
+\begin{thebibliography}{1}
+
+\bibitem{DEAP_JMLR2012}
+F\'elix-Antoine Fortin, Fran\c{c}ois-Michel {De Rainville}, Marc-Andr\'e
+  Gardner, Marc Parizeau, and Christian Gagn\'e.
+\newblock {DEAP}: Evolutionary algorithms made easy.
+\newblock {\em Journal of Machine Learning Research}, Vol.~13, pp. 2171--2175,
+  jul 2012.
+
+\bibitem{deap_url}
+{進化計算ライブラリDEAPで実数値GA}.
+\newblock \url{https://qiita.com/tyoshitake/items/e76f6f8e4110731606bc}.
+
+\bibitem{542381}
+N.~Hansen and A.~Ostermeier.
+\newblock Adapting arbitrary normal mutation distributions in evolution
+  strategies: the covariance matrix adaptation.
+\newblock In {\em Proceedings of IEEE International Conference on Evolutionary
+  Computation}, pp. 312--317, 1996.
+
+\bibitem{akimoto2016}
+秋本洋平.
+\newblock Evolution strategies による連続最適化.
+\newblock システム／制御／情報, Vol.~60, No.~7, pp. 292--297, 2016.
+
+\end{thebibliography}
