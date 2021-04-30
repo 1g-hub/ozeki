@@ -29,7 +29,7 @@ These codes are based on the energy plant operational planning problem in [1].
 -- Public properties --
 # int P1.N_x : number of continuous decision variables
 # int P1.N_y : number of discrete decision variables
-# int P1.P : number of objective funcitons
+# int P1.P : number of objective funcitons 目的関数の数
 # int P1.M : number of inequality conditions
 # int P1.Q : number of equality conditions
 # double P1.eps : tolerance for constraint violations

@@ -1,0 +1,113 @@
+%\documentstyle[epsf,twocolumn]{jarticle}       %LaTeX2.09�d�l
+\documentclass[twocolumn]{jarticle} 
+\setlength{\topmargin}{-45pt}
+%\setlength{\oddsidemargin}{0cm} 
+\setlength{\oddsidemargin}{-7.5mm}
+%\setlength{\evensidemargin}{0cm} 
+\setlength{\textheight}{24.1cm}
+%setlength{\textheight}{25cm} 
+\setlength{\textwidth}{17.4cm}
+%\setlength{\textwidth}{172mm} 
+\setlength{\columnsep}{11mm}
+
+% 【節が変わるごとに (1.1)(1.2) … (2.1)(2.2) と数式番号をつけるとき】
+%\makeatletter
+%\renewcommand{\theequation}{%
+%\thesection.\arabic{equation}} %\@addtoreset{equation}{section}
+%\makeatother
+
+%\renewcommand{\arraystretch}{0.95}行間の設定
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx} %pLaTeX2e仕様(\documentstyle ->\documentclass)
+\usepackage{url}		%参考文献にurlを入れる用
+\usepackage{bm}  	%太字形式のベクトルを使う用
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+	%bibtex用の設定
+	%\bibliographystyle{ujarticle}
+
+	\twocolumn[
+		\noindent
+		\hspace{1em}
+		2021 年 4 月 30 日
+		研究会資料
+		\hfill
+		B4	尾關  拓巳
+		\vspace{2mm}
+		\hrule
+		\begin{center}
+			{\Large \bf 進捗報告}
+		\end{center}
+		\hrule
+		\vspace{9mm}
+	]
+
+\section{今週やったこと}
+\begin{itemize}
+  \item ネルダーミード法の調査
+  \item ネルダーミード法でベンチマークを解く
+\end{itemize}
+
+
+\section{ネルダーミード法の調査}
+	\subsection{ネルダーミード法}
+	ネルダーミード法\cite{10.1093/comjnl/7.4.308}は1965年にNelderらが発表した最適化アルゴリズムである．n+1個の頂点からなるn次元の単体を反射，膨張，収縮させながら関数の最小値を探索する．
+	
+\section{ネルダーミード法でベンチマークを解く}
+	\subsection{実験設定}
+	ネルダーミード法の実験設定を表1に示す．
+	\begin{table}[htbp]
+		\begin{center}
+			\caption{ネルダーミード法の実験設定}
+			\begin{tabular}{| c | c |} \hline
+				step & 1.0 \\
+				no\_improv\_break & 1000 \\
+				no\_improv\_thr & $10^{-12}$ \\ 
+				max\_iter & 0 \\
+ 				$\alpha$ & 1.0 \\
+				$\gamma$ & 2.0 \\
+				$\rho$ & -0.5 \\
+				$\sigma$ & 0.5 \\ \hline
+				
+			\end{tabular}
+		\end{center}
+	\end{table}
+	
+	$\bm{x}$の初期位置は-100から100のランダムな実数とする．
+	\subsubsection{評価関数と制約違反}
+	取り扱うベンチマーク問題では制約違反を考慮する必要があり，今実験ではその許容量を$1.0\times10^{-10}$とする．また，制約違反の合計値$V$を式1のようにネルダーミード法の目的関数$F$に組み込む．
+	\begin{equation}
+		F(\bm{x}) = f(\bm{x}) +  10^{10}V 
+	\end{equation}
+	ただし，ベンチマークの目的関数を$f$とする．
+	
+	\subsection{結果}
+	上記の実験の結果を表2に示す．
+	\begin{table}[htbp]
+		\begin{center}
+			\caption{実験結果}
+			\begin{tabular}{| c | c |} \hline
+				目的関数値 & 制約違反 \\ \hline 
+				4225738.328 &  4667.910409 \\ \hline
+			\end{tabular}
+		\end{center}
+	\end{table}
+
+	制約違反が大きく許容量を超えており，目的関数の最小化も上手くいっていない．パラメーターを変えるなど予備実験を行ったがその結果は同等であった．120次元という次元数の高い問題にネルダーミード法が適していないことが原因ではないかと考えた．
+
+	
+\section{今後の予定}
+% なんとなくなんかの勉強をするとかではなく具体的に
+
+\begin{itemize}
+  \item 他の最適化手法を試す．
+\end{itemize}
+
+% 参考文献
+\bibliography{hoge}				%hogeはbibファイルのファイル名
+\bibliographystyle{junsrt}		%順番に表示
+
+\end{document}
