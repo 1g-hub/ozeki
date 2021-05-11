@@ -179,9 +179,17 @@ def evaluation(x, y, f, g, h):
         id_g += 1
 
     #Eq. (6i)
+    for j in range(N_t):
+        for i in range(I-1):
+            for tau in range(i+2,i + L_s[j]+1):
+                if tau < I:
+                    h[id_h] = (y_t[j][i + 1] - y_t[j][i]) * (y_t[j][i + 1] - y_t[j][tau])
+                    id_h += 1
+
+    #Eq. (6j)
     for j in range(N_s):
         for i in range(I-1):
-            for tau in range(i+2,i + L_s[j]):
+            for tau in range(i+2,i + L_s[j]+1):
                 if tau < I:
                     h[id_h] = (y_s[j][i + 1] - y_s[j][i]) * (y_s[j][i + 1] - y_s[j][tau])
                     id_h += 1
@@ -189,13 +197,13 @@ def evaluation(x, y, f, g, h):
     #Eq. (6k)
     for i in range(I-1):
         for tau in range(i+2,i+L_g+1):
-            if tau > I:
+            if tau < I:
                 h[id_h] = (y_g[i + 1] - y_g[i]) * (y_g[i + 1] - y_g[tau])
                 id_h += 1
 
     #Eq. (6l)
     for i in range(I-1):
-        for tau in range(i+2,i+L_g):
+        for tau in range(i+2,i+L_g+1):
             if tau < I:
                 h[id_h] = (y_b[i + 1] - y_b[i]) * (y_b[i + 1] - y_b[tau])
                 id_h += 1
@@ -360,9 +368,17 @@ def get_fitness(x):
         id_g += 1
 
     #Eq. (6i)
+    for j in range(N_t):
+        for i in range(I-1):
+            for tau in range(i+2,i + L_s[j]+1):
+                if tau < I:
+                    h[id_h] = (y_t[j][i + 1] - y_t[j][i]) * (y_t[j][i + 1] - y_t[j][tau])
+                    id_h += 1
+
+    #Eq. (6j)
     for j in range(N_s):
         for i in range(I-1):
-            for tau in range(i+2,i + L_s[j]):
+            for tau in range(i+2,i + L_s[j]+1):
                 if tau < I:
                     h[id_h] = (y_s[j][i + 1] - y_s[j][i]) * (y_s[j][i + 1] - y_s[j][tau])
                     id_h += 1
@@ -370,13 +386,13 @@ def get_fitness(x):
     #Eq. (6k)
     for i in range(I-1):
         for tau in range(i+2,i+L_g+1):
-            if tau > I:
+            if tau < I:
                 h[id_h] = (y_g[i + 1] - y_g[i]) * (y_g[i + 1] - y_g[tau])
                 id_h += 1
 
     #Eq. (6l)
     for i in range(I-1):
-        for tau in range(i+2,i+L_g):
+        for tau in range(i+2,i+L_g+1):
             if tau < I:
                 h[id_h] = (y_b[i + 1] - y_b[i]) * (y_b[i + 1] - y_b[tau])
                 id_h += 1
@@ -505,9 +521,17 @@ def evaluate_f(x):
         id_g += 1
 
     #Eq. (6i)
+    for j in range(N_t):
+        for i in range(I-1):
+            for tau in range(i+2,i + L_s[j]+1):
+                if tau < I:
+                    h[id_h] = (y_t[j][i + 1] - y_t[j][i]) * (y_t[j][i + 1] - y_t[j][tau])
+                    id_h += 1
+
+    #Eq. (6j)
     for j in range(N_s):
         for i in range(I-1):
-            for tau in range(i+2,i + L_s[j]):
+            for tau in range(i+2,i + L_s[j]+1):
                 if tau < I:
                     h[id_h] = (y_s[j][i + 1] - y_s[j][i]) * (y_s[j][i + 1] - y_s[j][tau])
                     id_h += 1
@@ -515,13 +539,13 @@ def evaluate_f(x):
     #Eq. (6k)
     for i in range(I-1):
         for tau in range(i+2,i+L_g+1):
-            if tau > I:
+            if tau < I:
                 h[id_h] = (y_g[i + 1] - y_g[i]) * (y_g[i + 1] - y_g[tau])
                 id_h += 1
 
     #Eq. (6l)
     for i in range(I-1):
-        for tau in range(i+2,i+L_g):
+        for tau in range(i+2,i+L_g+1):
             if tau < I:
                 h[id_h] = (y_b[i + 1] - y_b[i]) * (y_b[i + 1] - y_b[tau])
                 id_h += 1

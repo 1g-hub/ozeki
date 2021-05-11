@@ -1,0 +1,17 @@
+I = 24
+N_t = 1
+N_s = 2
+a_ge = 0.00543636
+a_gs = 0.002718
+a_b = 0.019933
+E_g_min = 6.0
+E_g_max = 20.0
+S_b_min = 0.16
+S_b_max = 16.0
+Q_ts_min = 83.721
+Q_ts_max1 = 468.8376
+Q_ts_max2 = 334.884
+Q_ts_init = 251.163
+Q_loss = 0.3
+L_g = 2
+L_b = 2
