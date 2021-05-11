@@ -1,0 +1,102 @@
+%\documentstyle[epsf,twocolumn]{jarticle}       %LaTeX2.09�d�l
+\documentclass[twocolumn]{jarticle} 
+\setlength{\topmargin}{-45pt}
+%\setlength{\oddsidemargin}{0cm} 
+\setlength{\oddsidemargin}{-7.5mm}
+%\setlength{\evensidemargin}{0cm} 
+\setlength{\textheight}{24.1cm}
+%setlength{\textheight}{25cm} 
+\setlength{\textwidth}{17.4cm}
+%\setlength{\textwidth}{172mm} 
+\setlength{\columnsep}{11mm}
+
+% 【節が変わるごとに (1.1)(1.2) … (2.1)(2.2) と数式番号をつけるとき】
+%\makeatletter
+%\renewcommand{\theequation}{%
+%\thesection.\arabic{equation}} %\@addtoreset{equation}{section}
+%\makeatother
+
+%\renewcommand{\arraystretch}{0.95}行間の設定
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx} %pLaTeX2e仕様(\documentstyle ->\documentclass)
+\usepackage{url}		%参考文献にurlを入れる用
+\usepackage{bm}  	%太字形式のベクトルを使う用
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+	%bibtex用の設定
+	%\bibliographystyle{ujarticle}
+
+	\twocolumn[
+		\noindent
+		\hspace{1em}
+		2021 年 5 月 7 日
+		研究会資料
+		\hfill
+		B4	尾關  拓巳
+		\vspace{2mm}
+		\hrule
+		\begin{center}
+			{\Large \bf 進捗報告}
+		\end{center}
+		\hrule
+		\vspace{9mm}
+	]
+
+\section{今週やったこと}
+\begin{itemize}
+  \item CMA-ESでベンチマークを解く
+\end{itemize}
+
+\section{CMA-ESでベンチマークを解く}
+	\subsection{実験設定}
+	表1にCMA-ESの実験設定を示す．
+	\begin{table}[htbp]
+		\begin{center}
+			\caption{CMA-ESの実験設定}
+			\begin{tabular}{| c | c |} \hline
+				最大世代数 & 3100 \\
+				入力次元数 & 120 \\
+				$\lambda$ & 2400 \\
+				$\mu$ & 1200 \\
+				$\sigma^{(0)}$ & 0.05 \\ 
+				$\bf{m}^{(0)}$ &  (5,...,5) \\ \hline
+				
+			\end{tabular}
+		\end{center}
+	\end{table}
+	
+
+	\subsubsection{制約違反}
+	取り扱うベンチマーク問題では目的関数$f$を最小化する際に，制約違反を考慮する必要があり，今実験ではそれを１つの目的関数$V$とする．またその許容量を$1.0\times10^{-10}$とする．CMA-ESでは，$V$を優先して最小化し許容量以下になった後に$f$を最小化するように設定する．
+	
+	\subsection{結果}
+	表2に上記の実験の結果の例を示す．
+	\begin{table}[htbp]
+		\begin{center}
+			\caption{実験結果}
+			\begin{tabular}{| c | c |} \hline
+				目的関数値 & 制約違反 \\ \hline 
+				4790466.891 &   $9.657381088\times10^{-11}$ \\ \hline
+			\end{tabular}
+		\end{center}
+	\end{table}
+
+	最適化の過程で，制約違反を許容量以下に抑えるまでは順調にできたが，目的関数は実験可能だった世代数では満足に最適化ができなかった．最適化の最後の方において目的関数が徐々に下がっていく傾向はあったため，パラメータを調整するか，実験可能な世代数を大きくすることで，目的関数をさらに最適化できるのではないかとと考えた．
+
+	
+\section{今後の予定}
+% なんとなくなんかの勉強をするとかではなく具体的に
+
+\begin{itemize}
+	\item 最大世代数を大きくする
+	\item パラメータの調整
+\end{itemize}
+
+% 参考文献
+% \bibliography{hoge}				%hogeはbibファイルのファイル名
+% \bibliographystyle{junsrt}		%順番に表示
+
+\end{document}
