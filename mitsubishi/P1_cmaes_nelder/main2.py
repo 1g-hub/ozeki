@@ -235,13 +235,14 @@ def main():
     y_cmaes_nelder = np.array(fbest_list)
     x = np.arange(1, len(fbest_list)+1)
     fig = plt.figure()
+    fig.subplots_adjust(left=0.2)
     plt.plot(x, y_cmaes_nelder)
     '''    a = {'x-axis':x, 'y-axis':y_cmaes_nelder} #途中から色を変えようとしたがうまくいかない
         df = pd.DataFrame(data=a)
         ax = df['y-axis'].plot()
         df.loc[df.index > NGEN, 'y-axis'].plot(color='r', ax=ax)
     '''
-    plt.show()
+    plt.yscale('log')
     fig.savefig("img2.pdf")
 
 if __name__ == "__main__":

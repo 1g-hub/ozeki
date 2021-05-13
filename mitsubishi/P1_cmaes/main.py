@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#CMA-ESで最適化
 import numpy as np
 import itertools
 
@@ -13,7 +14,7 @@ import matplotlib.pyplot as plt
 import P1
 
 N = P1.N_x  # 問題の次元
-NGEN = 15000   # 総ステップ数
+NGEN = 6000   # 総ステップ数
 
 creator.create("FitnessMin", base.Fitness, weights=(-1.0,-1.0))
 creator.create("Individual", list, fitness=creator.FitnessMin)
@@ -32,7 +33,7 @@ def main():
     np.random.seed(64)
 
     # The CMA-ES algorithm 
-    strategy = cma.Strategy(centroid=[10.0]*N, sigma=0.05, lambda_=5*N)
+    strategy = cma.Strategy(centroid=[10.0]*N, sigma=0.05, lambda_=10*N)
     toolbox.register("generate", strategy.generate, creator.Individual)
     toolbox.register("update", strategy.update)
 
@@ -111,9 +112,10 @@ def main():
     x = np.arange(1, NGEN+1)
 
     fig = plt.figure()
+    fig.subplots_adjust(left=0.2)
     plt.plot(x, y_f)
-    plt.show()
-    fig.savefig("img.pdf")
+    plt.yscale('log')
+    fig.savefig("cmaes.pdf")
 
 if __name__ == "__main__":
     main()

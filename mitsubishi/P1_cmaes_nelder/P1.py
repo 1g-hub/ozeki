@@ -410,7 +410,7 @@ def get_fitness(x):
     for q in range(Q):
         #print("h%d = %.10g" % (q+1, h[q]))
         V += abs(h[q])
-    f[0] += V*10**12
+    # f[0] += V*10**12
     return  f[0]
 
 

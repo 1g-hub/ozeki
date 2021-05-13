@@ -1,23 +1,22 @@
 # -*- coding: utf-8 -*-
-# CMA-ESで制約違反を満たす解が見つかったら，その解をネルダーミード法の初期解として代入する
-# 制約違反を満たす解が見つかってからの様子をグラフ化
+# ネルダーミード法で最適化を行ってからCMA-ESで最適化
 import numpy as np
 import itertools
 import copy
-from deap import algorithms
 from deap import base
-from deap import benchmarks
 from deap import cma
 from deap import creator
 from deap import tools
 
 import matplotlib.pyplot as plt
+from numpy.core.fromnumeric import shape
 import P1
 
 N = P1.N_x  # 問題の次元
-NGEN = 6000   # 総ステップ数
+NGEN = 5800   # 総ステップ数
+lambda_cmaes = 10*N
 
-def nelder_mead(f, x_start, step=0.1, no_improve_thr=10e-10, no_improv_break=4000, max_iter=0,
+def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=lambda_cmaes+1, max_iter=5000,
                 alpha=1., gamma=2., rho=-0.5, sigma=0.5):
     '''変数の説明
         @param f (function): function to optimize, must return a scalar score
@@ -38,6 +37,7 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=10e-10, no_improv_break=400
     no_improv = 0
     res = [[x_start, prev_best]]
     fbest_n = []
+    x_p = []
 
     for i in range(dim):
         x = copy.copy(x_start)
@@ -53,13 +53,14 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=10e-10, no_improv_break=400
         best = res[0][1]
         # break after max_iter
         if max_iter and iters >= max_iter:
-            return res[0], fbest_n 
+            return x_p, fbest_n 
         iters += 1
 
         # break after no_improv_break iterations with no improvement
         print ('...best so far:', best)
-        fbest_n.append(best)
-
+        fbest_n.append(P1.get_fitness(res[0][0]))
+        x_p.append(res[0][0])
+        x_p = x_p[-lambda_cmaes:] #CMA-ESで使用するxの分だけスライス
         if best < prev_best - no_improve_thr:
             no_improv = 0
             prev_best = best
@@ -67,7 +68,7 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=10e-10, no_improv_break=400
             no_improv += 1
 
         if no_improv >= no_improv_break:
-            return res[0], fbest_n
+            return x_p, fbest_n
 
         # centroid
         x0 = [0.] * dim
@@ -136,7 +137,7 @@ def f(x):
 def f_n(x): #ネルダーミード法用の関数
     V, F = P1.evaluate_f(x)
     if V >= P1.eps[0]:
-        F = 10e6
+        F = 1.0e7 + V
     return F
 
 toolbox = base.Toolbox()
@@ -145,9 +146,9 @@ toolbox.register("evaluate", f)
 
 def main():
     np.random.seed(64)
-
-    # The CMA-ES algorithm 
-    strategy = cma.Strategy(centroid=[10.0]*N, sigma=0.05, lambda_=10*N)
+    
+    # The CMA-ES algorithm
+    strategy = cma.Strategy(centroid=[10.0]*N, sigma=0.05, lambda_=lambda_cmaes)
     toolbox.register("generate", strategy.generate, creator.Individual)
     toolbox.register("update", strategy.update)
 
@@ -156,15 +157,25 @@ def main():
     # halloffame_array = []
     # C_array = []
     # centroid_array = []
-    fbest = np.ndarray((NGEN, 1))    #世代ごとのf(x)のベスト
+    fbest = [] # np.ndarray((NGEN, 1))    #世代ごとのf(x)のベスト
     vbest = np.ndarray((NGEN, 1))
-    best = np.ndarray((NGEN, N))     #世代ごとのxのベスト
-
-    switch = 0 #ネルダーミードを始めたかどうか
+    # best = np.ndarray((NGEN, N))     #世代ごとのxのベスト
 
     for gen in range(NGEN):
-        # 新たな世代の個体群を生成
-        population = toolbox.generate()
+        #新たな世代の個体群を生成
+        if gen == 1:
+            # a = 0.0
+            # b = 1.0
+            # x_start = (b - a) * np.random.rand(P1.N_x) + a
+            x_start = np.array(halloffame[0])
+            x_p, fbest_nelder = nelder_mead(f_n, x_start)
+            for i in range(lambda_cmaes):
+                x_p[i] = creator.Individual(x_p[i])
+            population = x_p
+            fbest.extend(fbest_nelder)
+        else:
+            population = toolbox.generate()
+            
         # 個体群の評価
         fitnesses = toolbox.map(toolbox.evaluate, population)
         for ind, fit in zip(population, fitnesses):
@@ -179,17 +190,10 @@ def main():
         # halloffame_array.append(halloffame[0])
         # C_array.append(strategy.C)
         # centroid_array.append(strategy.centroid)
-        fbest[gen] = halloffame[0].fitness.values[1] #V, Fで入力しているときは1
+        fbest.append(halloffame[0].fitness.values[1]) #V, Fで入力しているときは1
         vbest[gen] = halloffame[0].fitness.values[0]
-        best[gen, :N] = halloffame[0]
-        print("{} generation's (bestf, bestv) =({}, {})".format(gen+1, fbest[gen], vbest[gen]))
-        # 制約違反しない解が見つかったらネルダーミード法を実行
-        if switch == 0 and vbest[gen] == 0: #
-            x_start = np.array(halloffame[0])
-            x_f, fbest_nelder = nelder_mead(f_n, x_start)
-            gen_v0 = gen 
-
-            switch = 1 #1回しか実行されないようにするため
+        # best[gen, :N] = halloffame[0]
+        print("{} generation's (bestf, bestv) =({}, {})".format(gen+1, halloffame[0].fitness.values[1], vbest[gen]))
 
         if (gen+1)%100 == 0:
             x = []
@@ -198,7 +202,7 @@ def main():
             g = [0]*P1.M
             h = [0]*int(P1.Q)
 
-            x = best[gen]
+            x = halloffame[0]# best[gen]
             for n in range(P1.N_x):
                 if x[n] < 1.0e-10:
                     y.append(0.0)
@@ -233,22 +237,16 @@ def main():
             else:
                 print("Input solution is infeasible.")
 
+    print(shape(population))
 
     #グラフ描画 
-    fbest_list = list(itertools.chain.from_iterable(fbest))[gen_v0:]
-    y_cmaes = np.array(fbest_list)
-    y_nelder = np.array(fbest_nelder[:NGEN-gen_v0])
-    # y_v = np.array(list(itertools.chain.from_iterable(vbest)))
-    x = np.arange(1, NGEN-gen_v0+1)
-
+    y = np.array(fbest)
+    x = np.arange(1, len(fbest)+1)
     fig = plt.figure()
     fig.subplots_adjust(left=0.2)
-    p1 = plt.plot(x, y_cmaes) #2つのときp1=をつける
-    p2 = plt.plot(x, y_nelder)
+    plt.plot(x, y)
     plt.yscale('log')
-    plt.legend((p1[0], p2[0]), ("CMA-ES", "nelder-mead"))
-    fig.savefig("img_v2.pdf")
-    # print(population)     
+    fig.savefig("img.pdf")
 
 if __name__ == "__main__":
     main()

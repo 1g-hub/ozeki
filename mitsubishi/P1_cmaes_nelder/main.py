@@ -16,9 +16,7 @@ import P1
 N = P1.N_x  # 問題の次元
 NGEN = 6000   # 総ステップ数
 
-def nelder_mead(f, x_start, 
-                step=0.1, no_improve_thr=10e-10,
-                no_improv_break=4000, max_iter=0,
+def nelder_mead(f, x_start, step=0.1, no_improve_thr=10e-10, no_improv_break=4000, max_iter=0,
                 alpha=1., gamma=2., rho=-0.5, sigma=0.5):
     '''変数の説明
         @param f (function): function to optimize, must return a scalar score
@@ -245,8 +243,10 @@ def main():
     x = np.arange(1, NGEN+1)
 
     fig = plt.figure()
+    fig.subplots_adjust(left=0.2)
     p1 = plt.plot(x, y_cmaes) #2つのときp1=をつける
     p2 = plt.plot(x, y_nelder)
+    plt.yscale('log')
     plt.legend((p1[0], p2[0]), ("CMA-ES", "nelder-mead"))
     fig.savefig("img.pdf")
     # print(population)     

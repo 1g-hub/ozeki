@@ -1,0 +1,22 @@
+\begin{thebibliography}{1}
+
+\bibitem{10.1093/comjnl/7.4.308}
+J.~A. Nelder and R.~Mead.
+\newblock {A Simplex Method for Function Minimization}.
+\newblock {\em The Computer Journal}, Vol.~7, No.~4, pp. 308--313, 01 1965.
+
+\bibitem{542381}
+N.~Hansen and A.~Ostermeier.
+\newblock Adapting arbitrary normal mutation distributions in evolution
+  strategies: the covariance matrix adaptation.
+\newblock In {\em Proceedings of IEEE International Conference on Evolutionary
+  Computation}, pp. 312--317, 1996.
+
+\bibitem{DEAP_JMLR2012}
+F\'elix-Antoine Fortin, Fran\c{c}ois-Michel {De Rainville}, Marc-Andr\'e
+  Gardner, Marc Parizeau, and Christian Gagn\'e.
+\newblock {DEAP}: Evolutionary algorithms made easy.
+\newblock {\em Journal of Machine Learning Research}, Vol.~13, pp. 2171--2175,
+  jul 2012.
+
+\end{thebibliography}

@@ -27,9 +27,7 @@ import P1
 # 描画結果を保存するリスト
 graphs =[]
 
-def nelder_mead(f, x_start, 
-                step=0.1, no_improve_thr=10e-6,
-                no_improv_break=10, max_iter=0,
+def nelder_mead(f, x_start, step=1., no_improve_thr=1.0e-11, no_improv_break=2000, max_iter=0,
                 alpha=1., gamma=2., rho=-0.5, sigma=0.5):
     '''変数の説明
         @param f (function): function to optimize, must return a scalar score
@@ -49,6 +47,8 @@ def nelder_mead(f, x_start,
     prev_best = f(x_start)
     no_improv = 0
     res = [[x_start, prev_best]]
+    fbest_n = []
+    x_p = []
 
     for i in range(dim):
         x = copy.copy(x_start)
@@ -64,12 +64,14 @@ def nelder_mead(f, x_start,
         best = res[0][1]
         # break after max_iter
         if max_iter and iters >= max_iter:
-            return res[0]
+            return x_p, fbest_n
         iters += 1
 
         # break after no_improv_break iterations with no improvement
         print ('...best so far:', best)
-
+        fbest_n.append(P1.get_fitness(res[0][0]))
+        x_p.append(res[0][0])
+        x_p = x_p[-100:] #適当
         if best < prev_best - no_improve_thr:
             no_improv = 0
             prev_best = best
@@ -77,7 +79,7 @@ def nelder_mead(f, x_start,
             no_improv += 1
 
         if no_improv >= no_improv_break:
-            return res[0]
+            return x_p, fbest_n
 
         # centroid
         x0 = [0.] * dim
@@ -137,28 +139,29 @@ def nelder_mead(f, x_start,
 # テスト用、最小値を探す関数
 def f(x):
     V, F = P1.evaluate_f(x)
-    F += V * 10e10
+    if V >= P1.eps[0]:
+        F = 1.0e7 + V
     return F
 
-a = -100.0
-b = 100.0
+a = 0.
+b = 1.
 x = (b - a) * np.random.rand(P1.N_x) + a #初期値として0以上1未満の一様乱数(実数)
 
 #nelder mead
-x_f = nelder_mead(f, x,step=1., no_improv_break=1000, no_improve_thr=10e-12, alpha=1., gamma=2.0, rho=-0.5, sigma=0.5)
-
+x_p, fbest_nelder = nelder_mead(f, x)
+x_f = x_p[-1]
 y = []
 f = [0]*P1.P
 g = [0]*P1.M
 h = [0]*int(P1.Q)
 for n in range(P1.N_x):
-    if x_f[0][n] < 1.0e-10:
+    if x_f[n] < 1.0e-10:
         y.append(0.0)
     else:
         y.append(1.0)
 
 #evaluation
-f, g, h = P1.evaluation(x, y, f, g, h)
+f, g, h = P1.evaluation(x_f, y, f, g, h)
 
 #output
 print(x_f)
@@ -180,18 +183,18 @@ for q in range(P1.Q):
 #check feasibility
 print('Sum of violation = {:.10g}'.format(V))
 print("Tolerance = {:.2g} ".format(P1.eps[0]))
-if P1.checkFeasibility(x, y):
+if P1.checkFeasibility(x_f, y):
     print("Input solution is feasible.")
 else:
     print("Input solution is infeasible.")    
 
-    '''
-        if P1.checkFeasibility(x, y):
-            print("Input solution is feasible.")
-        else:
-            print("Input solution is infeasible.")
-    '''
-    
+y = np.array(fbest_nelder)
+x = np.arange(1, len(fbest_nelder)+1)
+fig = plt.figure()
+fig.subplots_adjust(left=0.2)
+plt.plot(x, y)
+plt.yscale('log')
+fig.savefig("nelder.pdf")
 
 
 '''
