@@ -3,9 +3,7 @@
 import numpy as np
 import itertools
 
-from deap import algorithms
 from deap import base
-from deap import benchmarks
 from deap import cma
 from deap import creator
 from deap import tools
@@ -109,13 +107,20 @@ def main():
             else:
                 print("Input solution is infeasible.")   
     y_f = np.array(list(itertools.chain.from_iterable(fbest)))
+    y_v = np.array(list(itertools.chain.from_iterable(vbest)))
     x = np.arange(1, NGEN+1)
 
-    fig = plt.figure()
-    fig.subplots_adjust(left=0.2)
+    fig1 = plt.figure()
+    fig1.subplots_adjust(left=0.2)
     plt.plot(x, y_f)
     plt.yscale('log')
-    fig.savefig("cmaes.pdf")
+    fig1.savefig("cmaes_F.pdf")
+
+    fig2 = plt.figure()
+    fig2.subplots_adjust(left=0.2)
+    plt.plot(x, y_v)
+    plt.yscale('log')
+    fig2.savefig("cmaes_V.pdf")
 
 if __name__ == "__main__":
     main()
