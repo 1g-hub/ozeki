@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.141592653-p3.9.0-210218-2.6 (utf8.sjis) (TeX Live 2021/W32TeX) (preloaded format=platex 2021.5.6)  13 MAY 2021 22:35
+This is e-pTeX, Version 3.141592653-p3.9.0-210218-2.6 (utf8.sjis) (TeX Live 2021/W32TeX) (preloaded format=platex 2021.5.6)  14 MAY 2021 10:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -162,78 +162,69 @@ LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <14.4> not available
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <14.4> not available
 (Font)              Font shape `JY1/gt/m/n' tried instead on input line 47.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <12> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 55.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 55.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 75.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 80.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 75.
-File: nelder.pdf Graphic file (type pdf)
-<nelder.pdf>
-
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 98--99
- [][] 
- []
-
-
-Underfull \hbox (badness 4954) in paragraph at lines 108--109
-[]\JY1/mc/m/n/10 今回は ， \OT1/cmr/m/n/10 python \JY1/mc/m/n/10 の進化計算ライ
-ブラリである
- []
-
-[1
-
-
-]
-File: cmaes.pdf Graphic file (type pdf)
-<cmaes.pdf>
-
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 145--146
- [][] 
- []
-
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 80.
 File: cmaes_nelder.pdf Graphic file (type pdf)
 <cmaes_nelder.pdf>
 
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 162--163
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 109--110
  [][] 
  []
 
 File: cmaes_nelder_v2.pdf Graphic file (type pdf)
 <cmaes_nelder_v2.pdf>
 
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 168--169
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 115--116
  [][] 
  []
 
+[1
+
+
+]
 File: cmaes_nelder2.pdf Graphic file (type pdf)
 <cmaes_nelder2.pdf>
 
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 176--177
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 123--124
  [][] 
  []
 
-[2] (./20210514.bbl
-LaTeX Font Info:    Kanji font shape `JY1/gt/m/it' undefined
-(Font)              No change on input line 6.
-LaTeX Font Info:    Kanji font shape `JY1/gt/m/it' undefined
-(Font)              No change on input line 12.
-LaTeX Font Info:    Kanji font shape `JY1/gt/m/it' undefined
-(Font)              No change on input line 19.
+File: nelder_cmaes.pdf Graphic file (type pdf)
+<nelder_cmaes.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 16--21
-[]\OT1/cmr/m/n/10 F^^Selix-Antoine Fortin, Fran^^Xcois-Michel De
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 132--133
+ [][] 
  []
 
-) [3] (./20210514.aux) ) 
-Here is how much of TeX's memory you used:
- 1684 strings out of 479466
- 22832 string characters out of 5873882
- 332097 words of memory out of 5000000
- 19389 multiletter control sequences out of 15000+600000
- 413329 words of font info for 65 fonts, out of 8000000 for 9000
- 929 hyphenation exceptions out of 8191
- 68i,10n,74p,438b,284s stack positions out of 5000i,500n,10000p,200000b,80000s
+File: cmaes.pdf Graphic file (type pdf)
+<cmaes.pdf>
 
-Output written on 20210514.dvi (3 pages, 14088 bytes).
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 143--144
+ [][] 
+ []
+
+File: cmaes_V.pdf Graphic file (type pdf)
+<cmaes_V.pdf>
+
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 148--149
+ [][] 
+ []
+
+[2]
+No file 20210514.bbl.
+[3] (./20210514.aux) ) 
+Here is how much of TeX's memory you used:
+ 1679 strings out of 479466
+ 22834 string characters out of 5873882
+ 332097 words of memory out of 5000000
+ 19385 multiletter control sequences out of 15000+600000
+ 412983 words of font info for 64 fonts, out of 8000000 for 9000
+ 929 hyphenation exceptions out of 8191
+ 68i,10n,74p,329b,286s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on 20210514.dvi (3 pages, 10256 bytes).

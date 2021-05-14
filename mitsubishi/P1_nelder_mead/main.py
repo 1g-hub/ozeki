@@ -48,6 +48,7 @@ def nelder_mead(f, x_start, step=1., no_improve_thr=1.0e-11, no_improv_break=200
     no_improv = 0
     res = [[x_start, prev_best]]
     fbest_n = []
+    vbest = []
     x_p = []
 
     for i in range(dim):
@@ -69,7 +70,9 @@ def nelder_mead(f, x_start, step=1., no_improve_thr=1.0e-11, no_improv_break=200
 
         # break after no_improv_break iterations with no improvement
         print ('...best so far:', best)
-        fbest_n.append(P1.get_fitness(res[0][0]))
+        ff, vv = P1.evaluate_f(res[0][0])
+        fbest_n.append(ff)
+        vbest.append(vv)
         x_p.append(res[0][0])
         x_p = x_p[-100:] #適当
         if best < prev_best - no_improve_thr:
@@ -148,7 +151,7 @@ b = 1.
 x = (b - a) * np.random.rand(P1.N_x) + a #初期値として0以上1未満の一様乱数(実数)
 
 #nelder mead
-x_p, fbest_nelder = nelder_mead(f, x)
+x_p, fbest_nelder, vbest = nelder_mead(f, x)
 x_f = x_p[-1]
 y = []
 f = [0]*P1.P

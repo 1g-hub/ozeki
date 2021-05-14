@@ -21,6 +21,8 @@ def f(x):
     V, F = P1.evaluate_f(x)
     if V < P1.eps[0]:
         V = 0
+    else:
+        F = 1.0e7
     return (V, F)
 
 toolbox = base.Toolbox()
@@ -114,12 +116,16 @@ def main():
     fig1.subplots_adjust(left=0.2)
     plt.plot(x, y_f)
     plt.yscale('log')
+    plt.xlabel('世代')
+    plt.ylabel('目的関数値')
     fig1.savefig("cmaes_F.pdf")
 
     fig2 = plt.figure()
     fig2.subplots_adjust(left=0.2)
     plt.plot(x, y_v)
     plt.yscale('log')
+    plt.xlabel('世代')
+    plt.ylabel('制約違反の合計値')
     fig2.savefig("cmaes_V.pdf")
 
 if __name__ == "__main__":
