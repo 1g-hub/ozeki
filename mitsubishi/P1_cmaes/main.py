@@ -19,11 +19,13 @@ creator.create("Individual", list, fitness=creator.FitnessMin)
 
 def f(x):
     V, F = P1.evaluate_f(x)
-    if V < P1.eps[0]:
+    if 57 <= V:
+        F = 1.0e10
+    elif P1.eps[0] <= V < 57 and F < 4000000:
+        F = 4000000
+    elif V < P1.eps[0] and F< 4000000:
         V = 0
-    else:
-        F = 1.0e7
-    return (V, F)
+    return (F, V)
 
 toolbox = base.Toolbox()
 toolbox.register("evaluate", f)
@@ -33,7 +35,7 @@ def main():
     np.random.seed(64)
 
     # The CMA-ES algorithm 
-    strategy = cma.Strategy(centroid=[10.0]*N, sigma=0.05, lambda_=10*N)
+    strategy = cma.Strategy(centroid=[10.0]*N, sigma=10000, lambda_=10*N)
     toolbox.register("generate", strategy.generate, creator.Individual)
     toolbox.register("update", strategy.update)
 
@@ -42,9 +44,9 @@ def main():
     # halloffame_array = []
     # C_array = []
     # centroid_array = []
-    fbest = np.ndarray((NGEN, 1))    #世代ごとのf(x)のベスト
-    vbest = np.ndarray((NGEN, 1))
-    best = np.ndarray((NGEN, N))     #世代ごとのxのベスト
+    fbest = []  # np.ndarray((NGEN, 1))    #世代ごとのf(x)のベスト
+    vbest = []  # np.ndarray((NGEN, 1))
+    # best = np.ndarray((NGEN, N))     #世代ごとのxのベスト
 
     for gen in range(NGEN):
         # 新たな世代の個体群を生成
@@ -63,18 +65,18 @@ def main():
         # halloffame_array.append(halloffame[0])
         # C_array.append(strategy.C)
         # centroid_array.append(strategy.centroid)
-        fbest[gen] = halloffame[0].fitness.values[1] #V, Fで入力しているときは1
-        vbest[gen] = halloffame[0].fitness.values[0]
-        best[gen, :N] = halloffame[0]
+        fbest.append(halloffame[0].fitness.values[0]) #V, Fで入力しているときは1
+        vbest.append(halloffame[0].fitness.values[1])
+        # best[gen, :N] = halloffame[0]
         print("{} generation's (bestf, bestv) =({}, {})".format(gen+1, fbest[gen], vbest[gen])) 
-        if (gen+1)%500 == 0:
+        if (gen+1)%100 == 0:
             x = []
             y = []
             f = [0]*P1.P
             g = [0]*P1.M
             h = [0]*int(P1.Q)
 
-            x = best[gen]
+            x = halloffame[0]
             for n in range(P1.N_x):
                 if x[n] < 1.0e-10:
                     y.append(0.0)
@@ -108,24 +110,24 @@ def main():
                 print("Input solution is feasible.")
             else:
                 print("Input solution is infeasible.")   
-    y_f = np.array(list(itertools.chain.from_iterable(fbest)))
-    y_v = np.array(list(itertools.chain.from_iterable(vbest)))
-    x = np.arange(1, NGEN+1)
+    y_f = np.array(fbest)
+    y_v = np.array(vbest)
+    x = np.arange(1, len(fbest)+1)
 
     fig1 = plt.figure()
     fig1.subplots_adjust(left=0.2)
     plt.plot(x, y_f)
     plt.yscale('log')
-    plt.xlabel('世代')
-    plt.ylabel('目的関数値')
+    plt.xlabel('generation')
+    plt.ylabel('F')
     fig1.savefig("cmaes_F.pdf")
 
     fig2 = plt.figure()
     fig2.subplots_adjust(left=0.2)
     plt.plot(x, y_v)
     plt.yscale('log')
-    plt.xlabel('世代')
-    plt.ylabel('制約違反の合計値')
+    plt.xlabel('generation')
+    plt.ylabel('V')
     fig2.savefig("cmaes_V.pdf")
 
 if __name__ == "__main__":

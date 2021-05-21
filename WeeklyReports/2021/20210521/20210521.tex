@@ -1,0 +1,60 @@
+%\documentstyle[epsf,twocolumn]{jarticle}       %LaTeX2.09�d�l
+\documentclass[twocolumn]{jarticle} 
+\setlength{\topmargin}{-45pt}
+%\setlength{\oddsidemargin}{0cm} 
+\setlength{\oddsidemargin}{-7.5mm}
+%\setlength{\evensidemargin}{0cm} 
+\setlength{\textheight}{24.1cm}
+%setlength{\textheight}{25cm} 
+\setlength{\textwidth}{17.4cm}
+%\setlength{\textwidth}{172mm} 
+\setlength{\columnsep}{11mm}
+
+% 【節が変わるごとに (1.1)(1.2) … (2.1)(2.2) と数式番号をつけるとき】
+%\makeatletter
+%\renewcommand{\theequation}{%
+%\thesection.\arabic{equation}} %\@addtoreset{equation}{section}
+%\makeatother
+
+%\renewcommand{\arraystretch}{0.95}行間の設定
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[dvipdfmx]{graphicx} %pLaTeX2e仕様(\documentstyle ->\documentclass)
+\usepackage{url}		%参考文献にurlを入れる用
+\usepackage{bm}  	%太字形式のベクトルを使う用
+\usepackage{amsmath}	%数式の場合分け用
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+	%bibtex用の設定
+	%\bibliographystyle{ujarticle}
+
+	\twocolumn[
+		\noindent
+		\hspace{1em}
+		2021 年 5 月 21 日
+		研究会資料
+		\hfill
+		B4	尾關  拓巳
+		\vspace{2mm}
+		\hrule
+		\begin{center}
+			{\Large \bf 進捗報告}
+		\end{center}
+		\hrule
+		\vspace{9mm}
+	]
+
+\section{今週やったこと}
+	\begin{itemize}
+		\item 制約違反を許容する目的関数でCMA-ESの実験
+		\item 秋元らの機能分担CMA-ESの論文\cite{2009F-EC02}を読む
+		\item 月曜の夜中から体調不調でした
+	\end{itemize}
+
+% 参考文献
+\bibliography{hoge}				%hogeはbibファイルのファイル名
+\bibliographystyle{junsrt}		%順番に表示
+
+\end{document}
