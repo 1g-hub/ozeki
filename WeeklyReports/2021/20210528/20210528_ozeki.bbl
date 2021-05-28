@@ -1,0 +1,61 @@
+\begin{thebibliography}{10}
+
+\bibitem{40021875158}
+勇治品野, 浩一藤井.
+\newblock 使ってみよう線形計画ソルバ (特集 はじめよう線形計画法).
+\newblock オペレーションズ・リサーチ = Communications of the Operations
+  Research Society of Japan : 経営の科学, Vol.~64, No.~4, pp. 238--245, apr
+  2019.
+
+\bibitem{denki}
+電気学会情報知能システムの新展開とその産業応用調査専門委員会.
+\newblock 産業応用のための最適化ベンチマーク問題集.
+\newblock 電気学会技術報告 第1287号, 3.2節, 2013.
+
+\bibitem{gurobi}
+{Gurobi Optimizer}.
+\newblock \url{https://www.octobersky.jp/products/gurobi/gurobi_version}.
+
+\bibitem{fico}
+{FICO Xpress Optimization}.
+\newblock \url{https://www.msi-jp.com/xpress/}.
+
+\bibitem{AOA}
+{AIMMS Outer Approximation}.
+\newblock \url{https://documentation.aimms.com/platform/solvers/aoa.html}.
+
+\bibitem{bynum2021pyomo}
+Michael~L. Bynum, Gabriel~A. Hackebeil, William~E. Hart, Carl~D. Laird,
+  Bethany~L. Nicholson, John~D. Siirola, Jean-Paul Watson, and David~L.
+  Woodruff.
+\newblock {\em Pyomo--optimization modeling in python}, Vol.~67.
+\newblock Springer Science \& Business Media, third edition, 2021.
+
+\bibitem{hart2011pyomo}
+William~E Hart, Jean-Paul Watson, and David~L Woodruff.
+\newblock Pyomo: modeling and solving mathematical programs in python.
+\newblock {\em Mathematical Programming Computation}, Vol.~3, No.~3, pp.
+  219--260, 2011.
+
+\bibitem{BERNAL2018895}
+David~E. Bernal, Qi~Chen, Felicity Gong, and Ignacio~E. Grossmann.
+\newblock Mixed-integer nonlinear decomposition toolbox for pyomo (mindtpy).
+\newblock In Mario~R. Eden, Marianthi~G. Ierapetritou, and Gavin~P. Towler,
+  editors, {\em 13th International Symposium on Process Systems Engineering
+  (PSE 2018)}, Vol.~44 of {\em Computer Aided Chemical Engineering}, pp.
+  895--900. Elsevier, 2018.
+
+\bibitem{10.5555/2990007.2990122}
+Marco~A. Duran and Ignacio~E. Grossmann.
+\newblock An outer-approximation algorithm for a class of mixed-integer
+  nonlinear programs.
+\newblock {\em Math. Program.}, Vol.~36, No.~3, p. 307^^e2^^80^^93339, October
+  1986.
+
+\bibitem{WESTERLUND1995131}
+Tapio Westerlund and Frank Pettersson.
+\newblock An extended cutting plane method for solving convex minlp problems.
+\newblock {\em Computers \& Chemical Engineering}, Vol.~19, pp. 131--136, 1995.
+\newblock European Symposium on Computer Aided Process Engineering\3-5.
+
+\end{thebibliography}

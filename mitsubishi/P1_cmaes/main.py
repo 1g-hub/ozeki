@@ -19,11 +19,11 @@ creator.create("Individual", list, fitness=creator.FitnessMin)
 
 def f(x):
     V, F = P1.evaluate_f(x)
-    if 57 <= V:
+    if 100 <= V:
         F = 1.0e10
-    elif P1.eps[0] <= V < 57 and F < 4000000:
-        F = 4000000
-    elif V < P1.eps[0] and F< 4000000:
+    elif P1.eps[0] <= V < 100 and F < 4100000:
+        F = 4100000
+    elif V < P1.eps[0] and F< 4100000:
         V = 0
     return (F, V)
 
