@@ -1,0 +1,94 @@
+%\documentstyle[epsf,twocolumn]{jarticle}       %LaTeX2.09�d�l
+\documentclass[twocolumn]{jarticle} 
+\setlength{\topmargin}{-45pt}
+%\setlength{\oddsidemargin}{0cm} 
+\setlength{\oddsidemargin}{-7.5mm}
+%\setlength{\evensidemargin}{0cm} 
+\setlength{\textheight}{24.1cm}
+%setlength{\textheight}{25cm} 
+\setlength{\textwidth}{17.4cm}
+%\setlength{\textwidth}{172mm} 
+\setlength{\columnsep}{11mm}
+
+% 【節が変わるごとに (1.1)(1.2) … (2.1)(2.2) と数式番号をつけるとき】
+%\makeatletter
+%\renewcommand{\theequation}{%
+%\thesection.\arabic{equation}} %\@addtoreset{equation}{section}
+%\makeatother
+
+%\renewcommand{\arraystretch}{0.95}行間の設定
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[dvipdfmx]{graphicx} %pLaTeX2e仕様(\documentstyle ->\documentclass)
+\usepackage{url}		%参考文献にurlを入れる用
+\usepackage{bm}  	%太字形式のベクトルを使う用
+\usepackage{amsmath}	%数式の場合分け用
+\usepackage{listings}    %ソースコード入れる用
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%ここからソースコードの表示に関する設定
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=0zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+
+\begin{document}
+
+	%bibtex用の設定
+	%\bibliographystyle{ujarticle}
+
+	\twocolumn[
+		\noindent
+		\hspace{1em}
+		2021 年 6 月 4 日
+		研究会資料
+		\hfill
+		B4	尾關  拓巳
+		\vspace{2mm}
+		\hrule
+		\begin{center}
+			{\Large \bf 進捗報告}
+		\end{center}
+		\hrule
+		\vspace{9mm}
+	]
+
+\section{今週やったこと}
+	\begin{itemize}
+		\item 大学院の出願書類の準備(途中)
+        \item Pyomoによるベンチマーク問題の実装
+	\end{itemize}
+\section{Pyomoによるベンチマーク問題の実装}
+    実装の際，問題となった点を以下に示す．
+    \begin{itemize}
+        \item 変数，制約条件，目的関数の書き方
+        \item 変数を2次元で入力しようとしたが，Pyomoが対応しておらず1次元で入力した．それにより，制約条件や目的関数に用いる変数のインデックスの調整などをした．
+    \end{itemize}
+    実行したときに出たエラーを次に示す．
+    \begin{lstlisting}
+        ValueError: MindtPy unable to handle relaxed NLP termination condition of other. Solver message: Too few degrees of freedom (rethrown)!
+    \end{lstlisting}
+    このエラーは非線形計画問題(NLP)のソルバーとして使われているInterior Point Optimizer(Ipopt)\cite{Ipopt}で発生し，制約条件や変数が多すぎることを意味する．
+    
+    MindtPyで使える他のNLPのソルバーでgamsがあったが，windowsのみの公開であった．
+\section{今後の展望}
+    変数と制約条件が多すぎることを踏まえ，エネルギープラントの各機器の出力$x$を稼働状態のときは各上・下限値の平均値，非稼働状態のときは0と固定し，稼働・非稼働のみの運用計画をPyomoを用いて最適化をする．その後，その運用計画に基づいてCMA-ESで最適化をしようと考えている．
+
+% 参考文献
+\bibliography{hoge}				%hogeはbibファイルのファイル名
+\bibliographystyle{junsrt}		%順番に表示
+
+\end{document}

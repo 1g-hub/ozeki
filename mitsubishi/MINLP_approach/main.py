@@ -158,7 +158,7 @@ def E_r(i):
     return f_t + E_L[i] - a_ge * model.x_g[i].value + E_rm[i]
 
 model.objective = pyo.Objective(rule = ObjRule, sense = pyo.minimize)
-pyo.SolverFactory('mindtpy').solve(model, mip_solver='glpk', nlp_solver='ipopt')
+pyo.SolverFactory('mindtpy').solve(model, strategy ='OA') #mip_solver='glpk', nlp_solver='ipopt'
 
 model.objective.display()
 model.display()
