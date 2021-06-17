@@ -54,16 +54,19 @@ E_rm = openfile("P1_E_rm.conf")
 S_rm = openfile("P1_S_rm.conf")
 eps = openfile("P1_tolerance.conf")
 model = pyo.ConcreteModel()
-model.x_t = pyo.Var(range(N_t*I), within=pyo.NonNegativeReals, initialize=0.0) #定義の仕方をなんとかせねば
-model.y_t = pyo.Var(range(N_t*I), within=pyo.Binary, initialize=0)
-model.x_s = pyo.Var(range(N_s*I), within=pyo.NonNegativeReals, initialize=0.0)
-model.y_s = pyo.Var(range(N_s*I), within=pyo.Binary, initialize=0)
-model.x_g = pyo.Var(range(I), within=pyo.NonNegativeReals, initialize=0.0)
-model.y_g = pyo.Var(range(I), within=pyo.Binary, initialize=0)
-model.x_b = pyo.Var(range(I), within=pyo.NonNegativeReals, initialize=0.0)
-model.y_b = pyo.Var(range(I), within=pyo.Binary, initialize=0)
+model.IDX_N_t = range(N_t*I)
+model.IDX_N_s = range(N_s*I)
+model.IDX = range(I)
+model.x_t = pyo.Var(model.IDX_N_t, within=pyo.NonNegativeReals, initialize=0.0) #定義の仕方をなんとかせねば
+model.y_t = pyo.Var(model.IDX_N_t, within=pyo.Binary, initialize=0)
+model.x_s = pyo.Var(model.IDX_N_s, within=pyo.NonNegativeReals, initialize=0.0)
+model.y_s = pyo.Var(model.IDX_N_s, within=pyo.Binary, initialize=0)
+model.x_g = pyo.Var(model.IDX, within=pyo.NonNegativeReals, initialize=0.0)
+model.y_g = pyo.Var(model.IDX, within=pyo.Binary, initialize=0)
+model.x_b = pyo.Var(model.IDX, within=pyo.NonNegativeReals, initialize=0.0)
+model.y_b = pyo.Var(model.IDX, within=pyo.Binary, initialize=0)
 Q_ts = [0]*I #model.Q_tsにしなくていいか？
-model.display()
+# model.display()
 def computeQ(i, Q_ts_i_minus_1):
     Q_ts_i = 0.0
     for j in range(N_t):
@@ -93,7 +96,7 @@ for i in range(I):
     f_sj_sum = 0.0
     for j in range(N_s):
         f_sj_sum += f_sj(j, i)
-    expr = a_gs * model.x_g[i] + a_b * model.x_b[i] - f_sj_sum - S_L[i] == S_rm[i]
+    expr = (-10.0, a_gs * model.x_g[i] + a_b * model.x_b[i] - f_sj_sum - S_L[i] - S_rm[i], 10.0)
     model.Eq_c.add(expr)
 
 model.Eq_d = pyo.ConstraintList()

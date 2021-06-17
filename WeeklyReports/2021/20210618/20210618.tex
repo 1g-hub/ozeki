@@ -1,0 +1,119 @@
+%\documentstyle[epsf,twocolumn]{jarticle}       %LaTeX2.09�d�l
+\documentclass[twocolumn]{jarticle} 
+\setlength{\topmargin}{-45pt}
+%\setlength{\oddsidemargin}{0cm} 
+\setlength{\oddsidemargin}{-7.5mm}
+%\setlength{\evensidemargin}{0cm} 
+\setlength{\textheight}{24.1cm}
+%setlength{\textheight}{25cm} 
+\setlength{\textwidth}{17.4cm}
+%\setlength{\textwidth}{172mm} 
+\setlength{\columnsep}{11mm}
+
+% 【節が変わるごとに (1.1)(1.2) … (2.1)(2.2) と数式番号をつけるとき】
+%\makeatletter
+%\renewcommand{\theequation}{%
+%\thesection.\arabic{equation}} %\@addtoreset{equation}{section}
+%\makeatother
+
+%\renewcommand{\arraystretch}{0.95}行間の設定
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[dvipdfmx]{graphicx} %pLaTeX2e仕様(\documentstyle ->\documentclass)
+\usepackage{url}		%参考文献にurlを入れる用
+\usepackage{bm}  	%太字形式のベクトルを使う用
+\usepackage{amsmath}	%数式の場合分け用
+\usepackage{listings}    %ソースコード入れる用
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%ここからソースコードの表示に関する設定
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=0zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+
+\begin{document}
+
+	%bibtex用の設定
+	%\bibliographystyle{ujarticle}
+
+	\twocolumn[
+		\noindent
+		\hspace{1em}
+		2021 年 6 月 18 日
+		研究会資料
+		\hfill
+		B4	尾關  拓巳
+		\vspace{2mm}
+		\hrule
+		\begin{center}
+			{\Large \bf 進捗報告}
+		\end{center}
+		\hrule
+		\vspace{9mm}
+	]
+
+\section{今週やったこと}
+	\begin{itemize}
+		\item 大学院の出願書類の準備, 提出
+        \item メモリ関係の調査
+        \item $x$ を固定し，変数削減
+        \item その他試行錯誤
+	\end{itemize}
+
+\section{メモリ関係の調査}
+    前回はPyomoで実装したコードを実行したところ，非線形計画問題(NLP)のソルバーとして使われているInterior Point Optimizer(Ipopt)で発生する，制約条件や変数が多すぎることを意味するエラーが出たことを報告した．それが実行環境のメモリ不足が原因である可能性を考え，メモリの容量が多いサーバーで実行した場合やメモリを引数として渡せるかを調査した．
+
+    メモリが64GBのthxserv.sspnetとメモリが128GBのkameserv.sspnetで実験環境を整え実行したが，先週と同様のエラーが出た．Listing 1にそのエラーを示す．
+    \begin{lstlisting}[caption = 発生したエラー]
+        ValueError: MindtPy unable to handle relaxed NLP termination condition of other. Solver message: Too few degrees of freedom (rethrown)!
+    \end{lstlisting}
+    初めからkameserv.sspnetを用いなかった理由は初めに複数のサーバーのメモリの容量を調べていなかったからである．実験環境を整える際の詳細は本内容と関連性が低いため省略する．
+
+    メモリを引数として宣言できるかを調査したが，適当な記述は見つからなかった．
+    
+    128GBのメモリ容量でも実行できず，使用メモリの拡張方法が見つからないという結果から，エラーメッセージのとおり変数や制約条件が多すぎるか，そもそもソースコードが何かしら間違っているという可能性があると考えた．
+
+\section{$x$ を固定し変数削減}
+    変数や制約条件を減らす目的で，各機器の熱出力及び消費ガス量 $x$ を固定した．具体的には，機器が稼働状態のときは各上・下限値の平均値，非稼働状態のときは0とした．これは，稼働状態を表す変数 $y$ を利用し，$x=(xの上限値と下限値の平均値)y$ と定式化できる．この固定により，423個の制約条件と240変数の問題から，303個の制約条件と120個の変数の問題に簡略化することができた．しかし，この簡略化された問題の全実行可能解が元の問題の全実行可能化と一致しているかは確認できていない．Pyomoで実装し実行したが, Listing 1と同じエラーがでた．ソースコードに原因があるか，まだ制約条件や変数を減らす必要があるのかと考えた．
+   
+\section{その他試行錯誤}
+    \subsection{評価時刻数 $I$ を小さくする}
+        一度評価時刻数 $I$ を小さくすることによりIpoptによるエラーが発生するかどうかを確認した．結果は $I\leq10$ のときにエラー内容が変わった．Listing 2にそのエラー内容を示す．
+        \begin{lstlisting}[caption = 発生したエラー2]
+            raise pyutilib.common.ApplicationError(
+            pyutilib.common._exceptions.ApplicationError: Solver (ipopt) did not exit normally
+        \end{lstlisting}
+        これもIpoptによるエラーだが原因はわからなかったため，引き続き調査したい．
+    \subsection{その他}
+        コードの修正を試みたが結果が変わらなかったものの概略を以下に示す．
+        \begin{itemize}
+            \item .valueの消去
+            \item 変数の設定の仕方
+            \item 等式制約条件の緩和
+        \end{itemize}
+
+\section{今後の展望}
+    Pyomoを用いてベンチマーク問題にアプローチしているが，未だ問題解く段階にたどり着けていない．引き続きPyomoを用いて試行錯誤を続けるか，その他のMINLPを解けるソルバーに転換するか悩んでいる．
+    
+    それとは別で，3章のように $x$ を固定して運用計画のみをネルダーミード法で探索し，その結果をCMA-ESの初期の平均ベクトルとして代入し，最適化するという手法を試したい．
+
+
+% 参考文献
+\bibliography{hoge}				%hogeはbibファイルのファイル名
+\bibliographystyle{junsrt}		%順番に表示
+
+\end{document}
