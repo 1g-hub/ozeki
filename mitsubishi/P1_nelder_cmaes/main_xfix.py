@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # ネルダーミード法で最適化を行ってからCMA-ESで最適化
 import numpy as np
+import random
 import itertools
 import copy
 from deap import base
@@ -13,10 +14,12 @@ from numpy.core.fromnumeric import shape
 import P1
 
 N = P1.N_x  # 問題の次元
-NGEN = 5800   # 総ステップ数
+max_iter_n = 1000 # ネルダーミード法の最大ステップ数
+nib_n = 200 #ネルダーミード法の変化なし許容回数
+NGEN = 10   # CMA-ESの総ステップ数
 lambda_cmaes = 10*N
 
-def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=lambda_cmaes+1, max_iter=5000,
+def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=100, max_iter=1000,
                 alpha=1., gamma=2., rho=-0.5, sigma=0.5):
     '''変数の説明
         @param f (function): function to optimize, must return a scalar score
@@ -33,10 +36,11 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=lam
     '''
     # init
     dim = len(x_start)
-    prev_best = f(x_start)
+    prev_best = f(x_start) #ここでx_startが01になっている
     no_improv = 0
     res = [[x_start, prev_best]]
     fbest_n = []
+    Vbest_n = []
     x_p = []
 
     for i in range(dim):
@@ -53,14 +57,19 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=lam
         best = res[0][1]
         # break after max_iter
         if max_iter and iters >= max_iter:
-            return x_p, fbest_n 
+            return x_p, fbest_n, Vbest_n
         iters += 1
 
         # break after no_improv_break iterations with no improvement
-        print ('...best so far:', best)
-        fbest_n.append(P1.get_fitness(res[0][0]))
-        x_p.append(res[0][0])
-        x_p = x_p[-lambda_cmaes:] #CMA-ESで使用するxの分だけスライス
+        print (iters, '...best so far:', best)
+        # print(res[0][0])
+        V_n, f_n = P1.evaluate_f_y(res[0][0])
+        fbest_n.append(f_n)
+        Vbest_n.append(V_n)
+
+        #x_p.append(res[0][0])
+        #x_p = x_p[-lambda_cmaes:] #CMA-ESで使用するxの分だけスライス
+        x_p = res[0][0]
         if best < prev_best - no_improve_thr:
             no_improv = 0
             prev_best = best
@@ -68,7 +77,7 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=lam
             no_improv += 1
 
         if no_improv >= no_improv_break:
-            return x_p, fbest_n
+            return x_p, fbest_n, Vbest_n
 
         # centroid
         x0 = [0.] * dim
@@ -125,81 +134,126 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=lam
             nres.append([redx, score])
         res = nres
 
-creator.create("FitnessMin", base.Fitness, weights=(-1.0,-1.0))
+creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 creator.create("Individual", list, fitness=creator.FitnessMin)
-def f(x):
+def xc_to_x(x):
     cnt = 0
+    X = []
     for i in range(P1.I*P1.N_t):
-        if(0 < x[cnt] < P1.Q_t_min[0]):
-            x[cnt] += P1.Q_t_min[0]
+        if(1 < x[cnt]):
+            #x[cnt] += P1.Q_t_min[0]
+            X.append(x[cnt] + P1.Q_t_min[0]- 1)
+        if(x[cnt] < -1):
+            X.append(-x[cnt] + P1.Q_t_min[0] - 1)
+        else: X.append(x[cnt])
         cnt += 1
     for i in range(P1.I*P1.N_s):
-        if(0 < x[cnt] < P1.Q_s_min[0]):
-            x[cnt] += P1.Q_s_min[0]
+        if(1 < x[cnt]):
+            #x[cnt] += P1.Q_s_min[0]
+            X.append(x[cnt] + P1.Q_s_min[0] - 1)
+        if(x[cnt] < -1):
+            X.append(-x[cnt] + P1.Q_s_min[0] - 1)
+        else: X.append(x[cnt])
         cnt += 1
     for i in range(P1.I):
-        if(0 < x[cnt] < P1.E_g_min):
-            x[cnt] += P1.E_g_min
+        if(1 < x[cnt]):
+            #x[cnt] += P1.E_g_min# /P1.a_ge
+            X.append(x[cnt] + P1.E_g_min/P1.a_ge -1)
+        if(x[cnt] < -1):
+            X.append(-x[cnt] + P1.E_g_min/P1.a_ge -1)
+        else: X.append(x[cnt])
         cnt += 1
     for i in range(P1.I):
-        if(0 < x[cnt] < P1.S_b_min):
-            x[cnt] += P1.S_b_min
+        if(1 < x[cnt]):
+            X.append(x[cnt] + P1.S_b_min/P1.a_b -1)
+        if(x[cnt] < -1):
+            X.append(-x[cnt] + P1.S_b_min/P1.a_b -1)
+        else: X.append(x[cnt])
         cnt += 1
-    V, F = P1.evaluate_f(x)
-    if V < P1.eps[0]:
-        V = 0
-    F += V*1.0e6
-    # F += V*1.0e5
-    return (F, )
+    return X
 
 def f_2(x):
     V, F = P1.evaluate_f(x)
     if V < P1.eps[0]:
         V = 0
-    return (V, F)
-
+    # return (V, F)
+    F += V*1.0e12
+    return (F, )
+def f(x):   #CMA-ESの関数
+    X = xc_to_x(x)
+    V, F = P1.evaluate_f(X)
+    rho = 1.0e10
+    # if F < 3950000:
+    #     F += 1.0e10
+    #     V += 1.0e10
+    if V < P1.eps[0]:
+        V = 0
+    F += V*rho
+    return (F, )
 def f_n(x): #ネルダーミード法用の関数
-    V, F = P1.evaluate_f(x)
-    if V >= P1.eps[0]:
-        F = 1.0e7 + V
+    V, F = P1.evaluate_f_y(x)
+    F += V*1.0e10
     return F
+'''def f_n_x(x): #ネルダーミード法用の関数
+    V, F = P1.evaluate_f(x)
+    F += V*1.0e0
+    return F'''
 
 toolbox = base.Toolbox()
 toolbox.register("evaluate", f)
 
 
 def main():
-    np.random.seed(64)
-    
+    np.random.seed(19) 
+    x_p = []*N
+    fbest = []    #世代ごとのf(x)のベスト
+    vbest = []
+    a = 0.99
+    b = 1.01
+    y_start = (b - a) * np.random.rand(N) + a
+    y_p, fbest_nelder, Vbest_nelder = nelder_mead(f_n, y_start, step=1.0, no_improve_thr=1.0e-5, no_improv_break=nib_n, max_iter=max_iter_n) #ネルダーミード法
+    y_p = P1.y_01(y_p) #yの値を0か1にする
+    x_p = P1.y_to_x(y_p) #yからxの値を代入
+        # for i in range(lambda_cmaes):
+        #     x_p[i] = creator.Individual(x_p[i])
+        # population = x_p
+    fbest.extend(fbest_nelder)
+    vbest.extend(Vbest_nelder)
+    cnt = 0 #x to xc (普通のxをCMAES用のxに変換)
+    for i in range(P1.I*P1.N_t):
+        if(1 < x_p[cnt]):
+            x_p[cnt] -= P1.Q_t_min[0] - 1
+        cnt += 1
+    for i in range(P1.I*P1.N_s):
+        if(1 < x_p[cnt]):
+            x_p[cnt] -= P1.Q_s_min[0] - 1
+        cnt += 1
+    for i in range(P1.I):
+        if(1 < x_p[cnt]):
+            x_p[cnt] -= P1.E_g_min/P1.a_ge - 1
+        cnt += 1
+    for i in range(P1.I):
+        if(1 < x_p[cnt]):
+            x_p[cnt] -= P1.S_b_min/P1.a_b - 1
+        cnt += 1
+    # x_p, fbest_nelder = nelder_mead(f_n_x, np.array(x_p), step=0.1, no_improve_thr=1.0e-5, no_improv_break=100, max_iter=0)   #さらにネルダーミードするなら
     # The CMA-ES algorithm
-    strategy = cma.Strategy(centroid=[10.0]*N, sigma=0.05, lambda_=lambda_cmaes)
+    strategy = cma.Strategy(centroid=x_p, sigma=0.1, lambda_=lambda_cmaes) #平均ベクトルをネルダーミードの最終解にする
     toolbox.register("generate", strategy.generate, creator.Individual)
     toolbox.register("update", strategy.update)
 
     halloffame = tools.HallOfFame(1)
 
-    # halloffame_array = []
-    # C_array = []
-    # centroid_array = []
-    fbest = [] # np.ndarray((NGEN, 1))    #世代ごとのf(x)のベスト
-    vbest = np.ndarray((NGEN, 1))
-    # best = np.ndarray((NGEN, N))     #世代ごとのxのベスト
+        # halloffame_array = []
+        # C_array = []
+        # centroid_array = []
+        # best = np.ndarray((NGEN, N))     #世代ごとのxのベスト
 
-    for gen in range(NGEN):
+    for gen in range(NGEN): #ステップ開始
         #新たな世代の個体群を生成
-        if gen == 1:
-            # a = 0.0
-            # b = 1.0
-            # x_start = (b - a) * np.random.rand(P1.N_x) + a
-            x_start = np.array(halloffame[0])
-            x_p, fbest_nelder = nelder_mead(f_n, x_start)
-            for i in range(lambda_cmaes):
-                x_p[i] = creator.Individual(x_p[i])
-            population = x_p
-            fbest.extend(fbest_nelder)
-        else:
-            population = toolbox.generate()
-            
+        population = toolbox.generate()
+        if gen == 0:
+            population[0] = creator.Individual(x_p) #ネルダーミード法の解を混ぜる
         # 個体群の評価
         fitnesses = toolbox.map(toolbox.evaluate, population)
         for ind, fit in zip(population, fitnesses):
@@ -211,37 +265,38 @@ def main():
         # hall-of-fameの更新
         halloffame.update(population)
 
-        # halloffame_array.append(halloffame[0])
-        # C_array.append(strategy.C)
-        # centroid_array.append(strategy.centroid)
-        # fbest.append(halloffame[0].fitness.values[1]) #V, Fで入力しているときは1
-        # vbest[gen] = halloffame[0].fitness.values[0]
-        # best[gen, :N] = halloffame[0]
-        fbest.append(halloffame[0].fitness.values[0])
-        # print("{} generation's (bestf, bestv) =({}, {})".format(gen+1, halloffame[0].fitness.values[1], vbest[gen]))
-        print("{} generation's (bestf) =({})".format(gen+1, halloffame[0].fitness.values[0]))
+            # halloffame_array.append(halloffame[0])
+            # C_array.append(strategy.C)
+            # centroid_array.append(strategy.centroid)
+        x_evaluated = xc_to_x(halloffame[0]) 
+        V_c, f_c = P1.evaluate_f(x_evaluated)  
+        fbest.append(f_c) #V, Fで入力しているときは1
+        vbest.append(V_c)
+        # print("{} generation's (bestf, bestv) =({}, {})".format(gen+1, halloffame[0].fitness.values[0], vbest[gen]))
+        print("{} generation's (bestF, f, V) =({}, {}, {})".format(gen+1, halloffame[0].fitness.values[0], f_c, V_c))
 
         if (gen+1)%100 == 0:
-            x = []
             y = []
             f = [0]*P1.P
             g = [0]*P1.M
             h = [0]*int(P1.Q)
 
-            x = halloffame[0]# best[gen]
+            x = xc_to_x(halloffame[0])# best[gen]
             for n in range(P1.N_x):
-                if x[n] < 1.0e-10:
+                if -P1.eps[0] < x[n] < P1.eps[0]:
                     y.append(0.0)
                 else:
                     y.append(1.0)
             
             #evaluation
             f, g, h = P1.evaluation(x, y, f, g, h)
+
             #output
             print(x)
             print(y)
             for p in range(P1.P):
                 print("f%d = %.10g " % (p+1, f[p]))
+
             V = 0.0
             for m in range(P1.M):
                 # print("g%d = %.10g" % (m+1, g[m]))
@@ -261,16 +316,27 @@ def main():
             else:
                 print("Input solution is infeasible.")
 
-    print(shape(population))
-
     #グラフ描画 
     y = np.array(fbest)
     x = np.arange(1, len(fbest)+1)
-    fig = plt.figure()
+
+    fig = plt.figure(1)
     fig.subplots_adjust(left=0.2)
-    plt.plot(x, y)
     plt.yscale('log')
-    fig.savefig("img.pdf")
+    plt.plot(x, y)
+    plt.xlabel("step, generation")
+    plt.ylabel("f")
+    fig.savefig("img_f.pdf")
+
+    x = np.arange(1, len(vbest)+1)
+    y = np.array(vbest)
+    fig = plt.figure(2)
+    fig.subplots_adjust(left=0.2)
+    plt.yscale('log')
+    plt.plot(x, y)
+    plt.xlabel("step, generation")
+    plt.ylabel("V")
+    fig.savefig("img_V.pdf")
 
 if __name__ == "__main__":
     main()

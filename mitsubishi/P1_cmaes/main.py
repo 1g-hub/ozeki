@@ -12,12 +12,61 @@ import matplotlib.pyplot as plt
 import P1
 
 N = P1.N_x  # 問題の次元
-NGEN = 6000   # 総ステップ数
-
-creator.create("FitnessMin", base.Fitness, weights=(-1.0,-1.0))
+NGEN = 3000   # 総ステップ数
+lambda_cmaes = 10*N
+cnt_f = 0
+creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 creator.create("Individual", list, fitness=creator.FitnessMin)
-
 def f(x):
+    cnt = 0
+    for i in range(P1.I*P1.N_t):
+        if(0 < x[cnt] < P1.Q_t_min[0]):
+            x[cnt] += P1.Q_t_min[0]
+        cnt += 1
+    for i in range(P1.I*P1.N_s):
+        if(0 < x[cnt] < P1.Q_s_min[0]):
+            x[cnt] += P1.Q_s_min[0]
+        cnt += 1
+    for i in range(P1.I):
+        if(0 < x[cnt] < P1.E_g_min):
+            x[cnt] += P1.E_g_min
+        cnt += 1
+    for i in range(P1.I):
+        if(0 < x[cnt] < P1.S_b_min):
+            x[cnt] += P1.S_b_min
+        cnt += 1
+    V, F = P1.evaluate_f(x)
+    if V < P1.eps[0]:
+        V = 0
+    global cnt_f
+    F += V*(1.0e3 + 1.0e5/NGEN*cnt_f)
+    # F += V*1.0e5
+    return (F, )
+
+def f_3(x):
+    cnt = 0
+    for i in range(P1.I*P1.N_t):
+        if(0 < x[cnt] < P1.Q_t_min[0]):
+            x[cnt] += P1.Q_t_min[0]
+        cnt += 1
+    for i in range(P1.I*P1.N_s):
+        if(0 < x[cnt] < P1.Q_s_min[0]):
+            x[cnt] += P1.Q_s_min[0]
+        cnt += 1
+    for i in range(P1.I):
+        if(0 < x[cnt] < P1.E_g_min):
+            x[cnt] += P1.E_g_min
+        cnt += 1
+    for i in range(P1.I):
+        if(0 < x[cnt] < P1.S_b_min):
+            x[cnt] += P1.S_b_min
+        cnt += 1
+    V, F = P1.evaluate_f(x)
+    if V < P1.eps[0]:
+        V = 0
+    return (V, F)
+
+def f_2(x):
     V, F = P1.evaluate_f(x)
     if 100 <= V:
         F = 1.0e10
@@ -35,7 +84,7 @@ def main():
     np.random.seed(64)
 
     # The CMA-ES algorithm 
-    strategy = cma.Strategy(centroid=[10.0]*N, sigma=10000, lambda_=10*N)
+    strategy = cma.Strategy(centroid=[0.]*N, sigma=100, lambda_=lambda_cmaes)
     toolbox.register("generate", strategy.generate, creator.Individual)
     toolbox.register("update", strategy.update)
 
@@ -50,7 +99,10 @@ def main():
 
     for gen in range(NGEN):
         # 新たな世代の個体群を生成
-        population = toolbox.generate()
+        population = toolbox.generate() #shape = (1世代の個体数, 120)
+        # print(population[0])
+        # print(np.shape(population[0])) #shape = (120,)
+
         # 個体群の評価
         fitnesses = toolbox.map(toolbox.evaluate, population)
         for ind, fit in zip(population, fitnesses):
@@ -65,10 +117,12 @@ def main():
         # halloffame_array.append(halloffame[0])
         # C_array.append(strategy.C)
         # centroid_array.append(strategy.centroid)
-        fbest.append(halloffame[0].fitness.values[0]) #V, Fで入力しているときは1
-        vbest.append(halloffame[0].fitness.values[1])
+        fbest.append(halloffame[0].fitness.values[0])
+        # fbest.append(halloffame[0].fitness.values[1]) #V, Fで入力しているときは1
+        # vbest.append(halloffame[0].fitness.values[0]) #0
         # best[gen, :N] = halloffame[0]
-        print("{} generation's (bestf, bestv) =({}, {})".format(gen+1, fbest[gen], vbest[gen])) 
+        # print("{} generation's (bestf, bestv) =({}, {})".format(gen+1, fbest[gen], vbest[gen])) 
+        print("{} generation's (bestf, bestv) =({})".format(gen+1, fbest[gen])) 
         if (gen+1)%100 == 0:
             x = []
             y = []
@@ -110,6 +164,9 @@ def main():
                 print("Input solution is feasible.")
             else:
                 print("Input solution is infeasible.")   
+        global cnt_f
+        cnt_f += 1
+
     y_f = np.array(fbest)
     y_v = np.array(vbest)
     x = np.arange(1, len(fbest)+1)
