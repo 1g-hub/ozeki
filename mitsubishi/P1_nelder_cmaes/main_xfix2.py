@@ -41,6 +41,7 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=100
     res = [[x_start, prev_best]]
     fbest_n = []
     Vbest_n = []
+    Fbest_n = []
     x_p = []
 
     for i in range(dim):
@@ -57,7 +58,7 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=100
         best = res[0][1]
         # break after max_iter
         if max_iter and iters >= max_iter:
-            return x_p, fbest_n, Vbest_n
+            return x_p, fbest_n, Vbest_n, Fbest_n
         iters += 1
 
         # break after no_improv_break iterations with no improvement
@@ -66,6 +67,7 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=100
         V_n, f_n = P1.evaluate_f_y(res[0][0])
         fbest_n.append(f_n)
         Vbest_n.append(V_n)
+        Fbest_n.append(res[0][1])
 
         #x_p.append(res[0][0])
         #x_p = x_p[-lambda_cmaes:] #CMA-ESで使用するxの分だけスライス
@@ -77,7 +79,7 @@ def nelder_mead(f, x_start, step=0.1, no_improve_thr=1.0e-5, no_improv_break=100
             no_improv += 1
 
         if no_improv >= no_improv_break:
-            return x_p, fbest_n, Vbest_n
+            return x_p, fbest_n, Vbest_n, Fbest_n
 
         # centroid
         x0 = [0.] * dim
@@ -208,10 +210,11 @@ def main():
     x_p = []*N
     fbest = []    #世代ごとのf(x)のベスト
     vbest = []
+    Fbest = []
     a = 0.99
     b = 1.01
     y_start = (b - a) * np.random.rand(N) + a
-    y_p, fbest_nelder, Vbest_nelder = nelder_mead(f_n, y_start, step=1.0, no_improve_thr=1.0e-5, no_improv_break=nib_n, max_iter=max_iter_n) #ネルダーミード法
+    y_p, fbest_nelder, Vbest_nelder, Fbest_nelder = nelder_mead(f_n, y_start, step=1.0, no_improve_thr=1.0e-5, no_improv_break=nib_n, max_iter=max_iter_n) #ネルダーミード法
     y_p = P1.y_01(y_p) #yの値を0か1にする
     x_p = P1.y_to_x(y_p) #yからxの値を代入
         # for i in range(lambda_cmaes):
@@ -219,6 +222,7 @@ def main():
         # population = x_p
     fbest.extend(fbest_nelder)
     vbest.extend(Vbest_nelder)
+    Fbest.extend(Fbest_nelder)
     '''cnt = 0 #x to xc (普通のxをCMAES用のxに変換)
     for i in range(P1.I*P1.N_t):
         if(1 < x_p[cnt]):
@@ -269,7 +273,9 @@ def main():
         V_c, f_c = P1.evaluate_f(halloffame[0])  
         fbest.append(f_c) #V, Fで入力しているときは1
         vbest.append(V_c)
-        print("{} generation's (bestF, f, V) =({}, {}, {})".format(gen+1, halloffame[0].fitness.values[0], f_c, V_c))
+        bestF = halloffame[0].fitness.values[0]
+        Fbest.append(bestF)
+        print("{} generation's (bestF, f, V) =({}, {}, {})".format(gen+1, bestF, f_c, V_c))
             # halloffame_array.append(halloffame[0])
             # C_array.append(strategy.C)
             # centroid_array.append(strategy.centroid)
@@ -316,8 +322,8 @@ def main():
                 print("Input solution is infeasible.")
 
     #グラフ描画 
-    y = np.array(fbest)
     x = np.arange(1, len(fbest)+1)
+    y = np.array(fbest)
 
     fig = plt.figure(1)
     fig.subplots_adjust(left=0.2)
@@ -336,6 +342,17 @@ def main():
     plt.xlabel("step, generation")
     plt.ylabel("V")
     fig.savefig("img_V.pdf")
+
+    x = np.arange(1, len(Fbest)+1)
+    y = np.array(Fbest)
+
+    fig = plt.figure(3)
+    fig.subplots_adjust(left=0.2)
+    plt.yscale('log')
+    plt.plot(x, y)
+    plt.xlabel("step, generation")
+    plt.ylabel("F")
+    fig.savefig("img_F.pdf")
 
 if __name__ == "__main__":
     main()
