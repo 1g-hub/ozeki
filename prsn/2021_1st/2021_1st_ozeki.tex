@@ -1,0 +1,183 @@
+%\documentstyle[epsf,twocolumn]{jarticle}       %LaTeX2.09�d�l
+\documentclass[twocolumn]{jarticle} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%  n�{ �o�[�W����
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\topmargin}{-45pt}
+%\setlength{\oddsidemargin}{0cm} 
+\setlength{\oddsidemargin}{-7.5mm}
+%\setlength{\evensidemargin}{0cm} 
+\setlength{\textheight}{24.1cm}
+%setlength{\textheight}{25cm} 
+\setlength{\textwidth}{17.4cm}
+%\setlength{\textwidth}{172mm} 
+\setlength{\columnsep}{11mm}
+
+
+%�y�߂������邲�Ƃ�(1.1)(1.2) �c(2.1)(2.2)�Ɛ����ԍ��������Ƃ��z
+%\makeatletter
+%\renewcommand{\theequation}{%
+%\thesection.\arabic{equation}} %\@addtoreset{equation}{section}
+%\makeatother
+
+%\renewcommand{\arraystretch}{0.95} �sT�̐ݒ�
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[dvipdfmx]{graphicx}  %pLaTeX2e�d�l(�v\documentstyle ->\documentclass)
+\usepackage{bm}
+\usepackage{amsmath, amssymb}
+\usepackage{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\twocolumn[
+\noindent
+
+\hspace{1em}
+令和3年7月5日(月) 2021年度前期研究発表会資料
+\hfill
+B4 尾關 拓巳
+
+\vspace{2mm}
+
+\hrule
+
+\begin{center}
+{\Large \bf Nelder-Mead法及び進化型計算によるエネルギープラント運用計画の最適化}
+\end{center}
+
+
+\hrule
+\vspace{3mm}
+]
+
+\section{はじめに}
+エネルギープラントは工場や建物全体におけるエネルギー消費の大部分を占めており，エネルギー管理者にとってエネルギープラントの省エネルギー化は優先して取り組むべき課題である．エネルギープラントの効率的な省エネルギー手法として，エネルギーマネジメントシステム(EMS)が適用されている．しかしながら EMS を適用するにあたっては，定式化する際のモデルと実際の機器との乖離や，未だ実用的規模のプラントに対する有効な最適化技術がない等，多くの課題がある．現実のエネルギープラントの最適化は困難であるためベンチマーク問題が提案されている．
+
+一方で，生物の進化から着想を得た確率的探索手法である進化型計算(EC)は，その汎用性の高さから科学や工学の様々な分野で用いられている．
+
+本研究では，実数値最適化問題を解くための有力な EC のアルゴリズムである CMA-ES と多次元の非線形最適化問題に適用可能な直接探索法である Nelder-Mead 法を用いて，エネルギープラントの様々な制約条件に柔軟に対応しながら最適化できる手法の構築を目的とする.
+
+
+\section{要素技術}
+    \subsection{エネルギープラント問題}
+    エネルギープラントでは，ガスタービン，ボイラ，冷凍機など様々な機器を用いて，電力・熱・蒸気などのエネルギーを供給している．エネルギープラント運用計画問題は，各エネルギーの需給バランス，機器の機械的制約，および運用制約を考慮したうえで，電力購入コストとガス購入コストを最小にするような機器の運転状態を計画する問題である．図\ref{energy_plant}に今回使うベンチマーク問題のエネルギープラントの模式図を示す \cite{denki}．
+    \begin{figure*}[hbtp]
+        \centering
+        \includegraphics[keepaspectratio, scale=1.0]
+            {energy_plant.png}
+        \caption{エネルギープラントの模式図(文献\cite{denki}の図3.2.1参照)}
+        \label{energy_plant}
+       \end{figure*}
+    この問題はガスタービン一台，ボイラ一台，ターボ式冷凍機一台，蒸気吸収式冷凍機二台の 5 つの機器からなる 24 時刻運用問題である．求める目的関数は 24 時刻の各時間帯で購入された電力及びガスの購入費用であり，
+    \begin{equation}
+        \label{fitness}
+        \min\sum_{i=1}^I\left\{C_{E_r}^iE_r^i(x_g^i, x_t^i, \bar{E}_L^i, E_{rm}^i) + C_{F_r}^i(x_g^i + x_b^i)\right\}
+    \end{equation}
+    と表される．ここで，$C_{E_r}^i$ は時刻 $i$ における電力購 入単価，$C_{F_r}^i$ は時刻 $i$ におけるガス購入単価，$E_r^i$ は時刻 $i$ における電力購入量，$\bar{E}_L^i$ は時刻 $i$ における電 力負荷，$E_{rm}^i$ は時刻 $i$ における電力の残りを表す. $x_g^i$ は時刻 $i$ におけるターボ式冷凍機の熱生成量，$x_t^i$ は時刻 $i$ におけるガスタービンのガス消費量，$x_b^i$ は時刻 $i$ におけるボイラーのガス消費量を表す．
+    
+    また，起動・停止状態は二時間以上継続しなければ状態を変えられないことや動作している機器の出力の上下限制など制約条件の詳細は，論文\cite{denki}を参照されたい.
+
+    \subsection{Nelder-Mead法}
+    Nelder-Mead法は制約条件がない最適化問題
+    \begin{equation}
+        \label{minfx}
+        \min f(\bm{x})
+    \end{equation}
+    を解くために用いられる直接探索法である．ここで，$n$ は次元数, $f: \mathbb{R}^n \rightarrow \mathbb{R}$ は目的関数を表す．$n$ 次元の空間で $n+1$ 個の頂点からなる単体(シンプレックス)を変形, ，移動する操作をしながら解を探索する．ここで，頂点 $\bm{x}_1, \bm{x}_2, \dots , \bm{x}_{n+1}$ を持つ単体を $\Delta$ と表記する． 
+    
+    Nelder-Mead 法は一連の単体を反復的に生成して(\ref{minfx})式の最適点を近似する．各試行で単体の頂点 $\{\bm{x}_j\}_{j=1}^{n+1}$ を(\ref{orderdfx})式のように目的関数値に従って順序付ける．
+    \begin{equation}
+        \label{orderdfx}
+        f(\bm{x}_1) \geq f(\bm{x}_2) \geq \cdots \geq f(\bm{x}_{n+1})
+    \end{equation}
+    ただし$\bm{x}_1$ を最良な頂点，$\bm{x}_{n+1}$ を最悪の頂点とする．
+
+    アルゴリズムで用いる単体の操作には反射，拡大，収縮，縮小があり，それぞれにスカラー値のパラメーター $\alpha$ (反射), $\beta$ (拡大), $\gamma$ (収縮)，$\delta$ (縮小) が与えられている．ただし，パラメータの値は，$\alpha > 0$, $\beta > 1$, $0 < \gamma < 1$, $0 < \delta < 1$ を満たす．Nelder-Mead法の標準的な実装ではパラメーターは(\ref{parameters})式のように選ばれている．
+    \begin{equation}
+        \label{parameters}
+        \{\alpha, \beta, \gamma, \delta\} = \{1, 2, 1/2, 1/2\}
+    \end{equation}
+    
+    $\bar{\bm{x}}$ を，目的関数が小さい順で $n$ 番目までの頂点の重心とすると，(\ref{centroid})式で表される．
+    \begin{equation}
+        \label{centroid}
+        \bar{\bm{x}} = \frac{1}{n}\sum_{i=1}^n\bm{x}_i
+    \end{equation}
+
+    ここで，Nelder-Mead法での1試行のアルゴリズムの概要を述べる．
+    \begin{enumerate}
+        \item \textbf{ソート}: $\Delta$ の $n+1$ 個の頂点を $f$ で評価し，(\ref{orderdfx})式が成立するようにソートする．
+        \item \textbf{反射}: 反射点 $\bm{x}_r$ を(\ref{x_r})式で計算する．
+        \begin{equation}
+            \label{x_r}
+            \bm{x}_r = \bar{\bm{x}} + \alpha(\bar{\bm{x}} - \bm{x}_{n+1})
+        \end{equation}
+        $f_r = f(\bm{x}_r)$ を評価する．もし$f_1 \leq f_r < f_n$ であれば，$\bm{x}_{n+1}$ を $\bm{x}_r$ に置き換える．
+        \item \textbf{拡大}: もし$f_r < f_1$ であれば，(\ref{x_e})式で拡大点 $\bm{x}_e$ を計算し，$f_e = f(\bm{x}_e)$ を評価する．
+        \begin{equation}
+            \label{x_e}
+            \bm{x}_e = \bar{\bm{x}} + \beta(\bm{x}_r - \bar{\bm{x}})
+        \end{equation}
+        $f_e < f_r$ のとき，$\bm{x}_{n+1}$ を $\bm{x}_e$ に置き換える．そうでなければ，$\bm{x}_{n+1}$ を $\bm{x}_r$ に置き換える．
+        \item \textbf{外側の収縮}: もし$f_n \leq f_r < f_{n+1}$ であれば，(\ref{x_oc})式で外側の収縮点 $\bm{x}_{oc}$ を計算し，$f_{oc} = f(\bm{x}_{oc})$ を評価する．
+        \begin{equation}
+            \label{x_oc}
+            \bm{x}_{oc} = \bar{\bm{x}} + \gamma(\bm{x}_r - \bar{\bm{x}})
+        \end{equation}
+        $f_{oc} \leq f_r$ のとき, $\bm{x}_{n+1}$ を $\bm{x}_{oc}$ に置き換える．そうでなければ，Step 6に移行する．
+        \item \textbf{内側の収縮}: もし $f_r \geq f_{n+1}$ であれば，(\ref{x_ic})式で内側の収縮点 $\bm{x}_{ic}$ を計算し，$f_{ic} = f(\bm{x}_{ic})$ を評価する．
+        \begin{equation}
+            \label{x_ic}
+            \bm{x}_{ic} = \bar{\bm{x}} - \gamma(\bm{x}_r - \bar{\bm{x}})
+        \end{equation}
+        $f_{ic} < f_{n+1}$ のとき，$\bm{x}_{n+1}$ を $\bm{x}_{ic}$ に置き換える．そうでなければ，Step 6に移行する．
+        \item \textbf{縮小}: $2 \leq i \leq n+1$ に対し，(\ref{x_i})式を計算する．
+        \begin{equation}
+            \label{x_i}
+            \bm{x}_i = \bm{x}_1 + \delta(\bm{x}_i - \bm{x}_1)
+        \end{equation}
+    \end{enumerate}
+
+    \subsection{CMA-ES}
+    進化型計算のひとつである共分散行列進化適応戦略(Evolution Strategy with Covarience Matrix Adaptation, CMA-ES)は悪スケール性や変数間依存といった最適化を困難にする特徴を持つ実数値最適化問題に対する有力なアルゴリズムである\cite{542381}．CMA-ES による探索では個体は多変量正規分布を用いた突然変異により生成される．この多変量生成分布の統計量である平均ベクトルおよび共分散行列を更新していくことで，探索を進める．
+
+\section{問題設定}
+ガスタービン一台，ボイラ一台，ターボ式冷凍機一台，蒸気吸収式冷凍機二台の5つの機器からなる24時刻運用問題であり，120次元の入力変数 $\bm{x}$ が存在する．表\ref{explain_variables}に $\bm{x}$ の定義域を示す．
+\begin{table*}[hbtp]
+    \caption{変数説明}
+    \label{explain_variables}
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        変数 & 変数の定義域 & 変数の意味 \\
+        \hline
+        $x_t$ & 0, 1.5〜5.0 & ターボ式冷凍機の熱生成量 \\
+        $x_{s1}$ & 0, 4.5〜15.0 & 蒸気吸収式冷凍機1の熱生成量 \\
+        $x_{s2}$ & 0, 4.5〜15.0 & 蒸気吸収式冷凍機2の熱生成量 \\
+        $x_g$ & 0, 1103〜3679 & ガスタービンのガス消費量 \\
+        $x_b$ & 0, 8.02〜803 & ボイラーのガス消費量 \\
+        \hline
+    \end{tabular}
+  \end{table*}
+  
+\section{提案手法}
+
+\section{実験}
+
+\section{まとめと今後の課題}
+
+
+%参考文献
+\bibliographystyle{unsrt}
+\bibliography{sankou}
+
+% \begin{thebibliography}{9}
+%     \bibitem{d_mori} 森 大典. 深層強化学習Rainbowを用いたデイトレード戦略の構築. 2018.
+%     \bibitem{OpenAI} 
+% \end{thebibliography}
+
+\end{document}

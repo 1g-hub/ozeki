@@ -184,7 +184,7 @@ def f_2(x):
 def f(x):   #CMA-ESの関数
     # X = xc_to_x(x)
     V, F = P1.evaluate_f(x)
-    rho = 1.0e4
+    rho = 2.5e3
     if F < 3999000:
         F += 1.0e10
         V += 1.0e10
