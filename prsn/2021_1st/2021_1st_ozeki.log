@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.2-190908-2.6 (utf8.euc) (TeX Live 2019/Debian) (preloaded format=platex 2020.10.8)  28 JUN 2021 13:19
+This is e-pTeX, Version 3.14159265-p3.8.2-190908-2.6 (utf8.euc) (TeX Live 2019/Debian) (preloaded format=platex 2020.10.8)  28 JUN 2021 17:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -184,24 +184,10 @@ LaTeX Font Info:    Font shape `JY1/mc/b/n' in size <12> not available
 (Font)              Font shape `JY1/mc/bx/n' tried instead on input line 66.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
 (Font)              Font shape `JY1/gt/m/n' tried instead on input line 66.
-LaTeX Font Info:    Font shape `JT1/mc/b/n' in size <10> not available
-(Font)              Font shape `JT1/mc/bx/n' tried instead on input line 67.
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 67.
-LaTeX Font Info:    Font shape `JY1/mc/b/n' in size <10> not available
-(Font)              Font shape `JY1/mc/bx/n' tried instead on input line 67.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 67.
-
-
-LaTeX Warning: Citation `denki' on page 1 undefined on input line 67.
-
 File: energy_plant.png Graphic file (type bmp)
 <energy_plant.png>
-
-LaTeX Warning: Citation `denki' on page 1 undefined on input line 72.
-
 LaTeX Font Info:    Trying to load font information for U+msa on input line 76.
+
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -211,32 +197,56 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 76.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-
-LaTeX Warning: Citation `denki' on page 1 undefined on input line 82.
-
-[1
+) [1
 
 
 ]
+LaTeX Font Info:    Font shape `JT1/mc/b/n' in size <10> not available
+(Font)              Font shape `JT1/mc/bx/n' tried instead on input line 113.
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 113.
+LaTeX Font Info:    Font shape `JY1/mc/b/n' in size <10> not available
+(Font)              Font shape `JY1/mc/bx/n' tried instead on input line 113.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 113.
 
-LaTeX Warning: Citation `542381' on page 2 undefined on input line 146.
 
-No file 2021_1st_ozeki.bbl.
-[2] [3
+LaTeX Warning: Citation `DEAP_JMLR2012' on page 2 undefined on input line 168.
 
-] (./2021_1st_ozeki.aux)
+[2]
+File: img_F.pdf Graphic file (type pdf)
+<img_F.pdf>
+
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 181--182
+ [][] 
+ []
+
+File: img_f.pdf Graphic file (type pdf)
+<img_f.pdf>
+
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 187--188
+ [][] 
+ []
+
+File: img_V.pdf Graphic file (type pdf)
+<img_V.pdf>
+
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 193--194
+ [][] 
+ []
+
+(./2021_1st_ozeki.bbl) [3] (./2021_1st_ozeki.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 2070 strings out of 482863
- 25944 string characters out of 5959218
- 267235 words of memory out of 5000000
- 17395 multiletter control sequences out of 15000+600000
+ 2097 strings out of 482863
+ 26326 string characters out of 5959218
+ 267283 words of memory out of 5000000
+ 17413 multiletter control sequences out of 15000+600000
  542801 words of font info for 66 fonts, out of 8000000 for 9000
  264 hyphenation exceptions out of 8191
  30i,10n,31p,539b,288s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 2021_1st_ozeki.dvi (3 pages, 14408 bytes).
+Output written on 2021_1st_ozeki.dvi (3 pages, 16220 bytes).
