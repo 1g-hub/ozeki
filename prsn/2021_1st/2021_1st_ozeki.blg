@@ -1,51 +1,49 @@
-This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
+This is pBibTeX, Version 0.99d-j0.33 (utf8.euc) (TeX Live 2019/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: 2021_1st_ozeki.aux
-I couldn't open style file junsrt.bst
----line 29 of file 2021_1st_ozeki.aux
- : \bibstyle{junsrt
- :                 }
-I'm skipping whatever remains of this command
-I found no style file---while reading file 2021_1st_ozeki.aux
+The style file: junsrt.bst
+Database file #1: hoge.bib
+Warning--empty journal in denki
 You've used 6 entries,
-            0 wiz_defined-function locations,
-            92 strings with 601 characters,
-and the built_in function-call counts, 0 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 0
-:= -- 0
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
+            2270 wiz_defined-function locations,
+            581 strings with 5070 characters,
+and the built_in function-call counts, 2256 in all, are:
+= -- 190
+> -- 45
+< -- 12
++ -- 19
+- -- 13
+* -- 122
+:= -- 260
+add.period$ -- 18
+call.type$ -- 6
+change.case$ -- 6
 chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 0
-format.name$ -- 0
-if$ -- 0
+cite$ -- 7
+duplicate$ -- 146
+empty$ -- 216
+format.name$ -- 26
+if$ -- 568
 int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 0
-num.names$ -- 0
-pop$ -- 0
-preamble$ -- 0
+int.to.str$ -- 6
+missing$ -- 6
+newline$ -- 33
+num.names$ -- 6
+pop$ -- 35
+preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 0
+skip$ -- 127
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
+substring$ -- 156
+swap$ -- 59
+text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 0
-(There were 2 error messages)
+warning$ -- 1
+while$ -- 18
+width$ -- 7
+write$ -- 67
+is.kanji.str$ -- 68
+(There was 1 warning)

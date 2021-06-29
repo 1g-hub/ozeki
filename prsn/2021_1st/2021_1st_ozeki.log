@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.2-190908-2.6 (utf8.euc) (TeX Live 2019/Debian) (preloaded format=platex 2020.10.8)  28 JUN 2021 17:42
+This is e-pTeX, Version 3.14159265-p3.8.2-190908-2.6 (utf8.euc) (TeX Live 2019/Debian) (preloaded format=platex 2020.10.8)  29 JUN 2021 16:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -210,43 +210,58 @@ LaTeX Font Info:    Font shape `JY1/mc/b/n' in size <10> not available
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
 (Font)              Font shape `JY1/gt/m/n' tried instead on input line 113.
 
-
-LaTeX Warning: Citation `DEAP_JMLR2012' on page 2 undefined on input line 168.
+Overfull \hbox (15.98665pt too wide) in paragraph at lines 154--165
+ [][][][] 
+ []
 
 [2]
 File: img_F.pdf Graphic file (type pdf)
 <img_F.pdf>
 
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 181--182
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 239--240
  [][] 
  []
 
 File: img_f.pdf Graphic file (type pdf)
 <img_f.pdf>
 
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 187--188
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 245--246
  [][] 
  []
 
 File: img_V.pdf Graphic file (type pdf)
 <img_V.pdf>
 
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 193--194
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 251--252
  [][] 
  []
 
-(./2021_1st_ozeki.bbl) [3] (./2021_1st_ozeki.aux)
+[3] (./2021_1st_ozeki.bbl
 
-LaTeX Warning: There were undefined references.
+LaTeX Font Warning: Font shape `JT1/gt/m/it' undefined
+(Font)              using `JT1/gt/m/n' instead on input line 11.
+
+
+LaTeX Font Warning: Font shape `JY1/gt/m/it' undefined
+(Font)              using `JY1/gt/m/n' instead on input line 11.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--38
+[]\OT1/cmr/m/n/10 F^^Selix-Antoine Fortin, Fran^^Xcois-Michel De
+ []
+
+) [4] (./2021_1st_ozeki.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 2097 strings out of 482863
- 26326 string characters out of 5959218
- 267283 words of memory out of 5000000
- 17413 multiletter control sequences out of 15000+600000
- 542801 words of font info for 66 fonts, out of 8000000 for 9000
+ 2109 strings out of 482863
+ 26467 string characters out of 5959218
+ 271310 words of memory out of 5000000
+ 17424 multiletter control sequences out of 15000+600000
+ 543147 words of font info for 67 fonts, out of 8000000 for 9000
  264 hyphenation exceptions out of 8191
  30i,10n,31p,539b,288s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 2021_1st_ozeki.dvi (3 pages, 16220 bytes).
+Output written on 2021_1st_ozeki.dvi (4 pages, 25136 bytes).

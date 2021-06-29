@@ -1,0 +1,39 @@
+\begin{thebibliography}{1}
+
+\bibitem{denki}
+電気学会情報知能システムの新展開とその産業応用調査専門委員会.
+\newblock 産業応用のための最適化ベンチマーク問題集.
+\newblock 電気学会技術報告 第1287号, 3.2節, 2013.
+
+\bibitem{10.1093/comjnl/7.4.308}
+J.~A. Nelder and R.~Mead.
+\newblock {A Simplex Method for Function Minimization}.
+\newblock {\em The Computer Journal}, Vol.~7, No.~4, pp. 308--313, 01 1965.
+
+\bibitem{gao2012implementing}
+Fuchang Gao and Lixing Han.
+\newblock Implementing the nelder-mead simplex algorithm with adaptive
+  parameters.
+\newblock {\em Computational Optimization and Applications}, Vol.~51, No.~1,
+  pp. 259--277, 2012.
+
+\bibitem{542381}
+N.~Hansen and A.~Ostermeier.
+\newblock Adapting arbitrary normal mutation distributions in evolution
+  strategies: the covariance matrix adaptation.
+\newblock In {\em Proceedings of IEEE International Conference on Evolutionary
+  Computation}, pp. 312--317, 1996.
+
+\bibitem{akimoto2016}
+秋本洋平.
+\newblock Evolution strategies による連続最適化.
+\newblock システム／制御／情報, Vol.~60, No.~7, pp. 292--297, 2016.
+
+\bibitem{DEAP_JMLR2012}
+F\'elix-Antoine Fortin, Fran\c{c}ois-Michel {De Rainville}, Marc-Andr\'e
+  Gardner, Marc Parizeau, and Christian Gagn\'e.
+\newblock {DEAP}: Evolutionary algorithms made easy.
+\newblock {\em Journal of Machine Learning Research}, Vol.~13, pp. 2171--2175,
+  jul 2012.
+
+\end{thebibliography}
