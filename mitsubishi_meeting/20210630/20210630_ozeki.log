@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.2-190908-2.6 (utf8.euc) (TeX Live 2019/Debian) (preloaded format=platex 2020.10.8)  29 JUN 2021 20:37
+This is e-pTeX, Version 3.14159265-p3.8.2-190908-2.6 (utf8.euc) (TeX Live 2019/Debian) (preloaded format=platex 2020.10.8)  30 JUN 2021 12:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -233,25 +233,28 @@ LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
 File: img_F.pdf Graphic file (type pdf)
 <img_F.pdf>
 
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 184--185
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 185--186
  [][] 
  []
 
 File: img_f.pdf Graphic file (type pdf)
 <img_f.pdf>
 
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 190--191
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 191--192
  [][] 
  []
 
 File: img_V.pdf Graphic file (type pdf)
 <img_V.pdf>
 
-Overfull \hbox (24.18492pt too wide) in paragraph at lines 196--197
+Overfull \hbox (24.18492pt too wide) in paragraph at lines 197--198
  [][] 
  []
 
-[2] (./20210630_ozeki.bbl
+[2]
+File: bar_graph.png Graphic file (type bmp)
+<bar_graph.png>
+ (./20210630_ozeki.bbl
 
 LaTeX Font Warning: Font shape `JT1/gt/m/it' undefined
 (Font)              using `JT1/gt/m/n' instead on input line 7.
@@ -275,18 +278,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 37--42
 []\OT1/cmr/m/n/10 F^^Selix-Antoine Fortin, Fran^^Xcois-Michel De
  []
 
-) [3] (./20210630_ozeki.aux)
+) [3] [4] (./20210630_ozeki.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 3703 strings out of 482863
- 47324 string characters out of 5959218
- 299626 words of memory out of 5000000
- 19005 multiletter control sequences out of 15000+600000
+ 3710 strings out of 482863
+ 47440 string characters out of 5959218
+ 299634 words of memory out of 5000000
+ 19009 multiletter control sequences out of 15000+600000
  544113 words of font info for 71 fonts, out of 8000000 for 9000
  264 hyphenation exceptions out of 8191
  30i,10n,36p,465b,1168s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 20210630_ozeki.dvi (3 pages, 16908 bytes).
+Output written on 20210630_ozeki.dvi (4 pages, 17256 bytes).
