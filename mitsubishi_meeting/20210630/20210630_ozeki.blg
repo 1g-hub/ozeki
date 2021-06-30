@@ -1,0 +1,49 @@
+This is pBibTeX, Version 0.99d-j0.33 (utf8.euc) (TeX Live 2019/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: 20210630_ozeki.aux
+The style file: junsrt.bst
+Database file #1: hoge.bib
+Warning--empty journal in denki
+You've used 6 entries,
+            2270 wiz_defined-function locations,
+            587 strings with 5455 characters,
+and the built_in function-call counts, 2588 in all, are:
+= -- 217
+> -- 85
+< -- 11
++ -- 32
+- -- 26
+* -- 139
+:= -- 300
+add.period$ -- 19
+call.type$ -- 6
+change.case$ -- 6
+chr.to.int$ -- 0
+cite$ -- 7
+duplicate$ -- 168
+empty$ -- 212
+format.name$ -- 52
+if$ -- 654
+int.to.chr$ -- 0
+int.to.str$ -- 6
+missing$ -- 7
+newline$ -- 33
+num.names$ -- 8
+pop$ -- 36
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 156
+stack$ -- 0
+substring$ -- 136
+swap$ -- 79
+text.length$ -- 11
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 16
+width$ -- 7
+write$ -- 70
+is.kanji.str$ -- 87
+(There was 1 warning)
