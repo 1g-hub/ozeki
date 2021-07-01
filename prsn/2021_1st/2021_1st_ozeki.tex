@@ -167,7 +167,7 @@ B4 尾關 拓巳
 \section{提案手法}
 今回は Nelder-Mead 法と CMA-ES を用いた電力プラントの最適化の第一段階として，エネルギープラント運用計画のための最適化ベンチマーク問題 ver.1\cite{denki}を対象とする．なお，deapのcmaのStrategyを使用した\cite{DEAP_JMLR2012}．
 
-単目的最適化の場合(Strategy)は(\ref{fitness})式で述べた元の目的関数を $f$, 機器の上下限制約，起動・停止状態などの満たすべき等式・不等式をまとめた制約違反関数を $V$, ペナルティ関数の重みを $\rho$ とすると， Nelder-Mead 法および CMA-ES 上での目的関数 $F$ は(\ref{F})式で表される．
+単目的最適化の場合(Strategy)は(\ref{fitness})式で述べた元の目的関数を $f$, 機器の上下限制約，起動・停止状態などの満たすべき等式・不等式をまとめた制約違反関数を $V$, ペナルティ関数の係数を $\rho$ とすると， Nelder-Mead 法および CMA-ES 上での目的関数 $F$ は(\ref{F})式で表される．
 \begin{equation}
     \label{F}
     F = f + \rho V
