@@ -91,7 +91,7 @@ B4 尾關 拓巳
         \min f(\bm{x})
     \end{equation}
     を解くために用いられる局所探索手法である．%\cite{gao2012implementing}
-    ここで，$n$ は次元数, $f: \mathbb{R}^n \rightarrow \mathbb{R}$ は目的関数を表す．$n$ 次元の空間で $n+1$ 個の頂点からなる単体(シンプレックス)を変形・移動する操作をしながら解を探索する．ここで，頂点 $\bm{x}_1, \bm{x}_2, \dots , \bm{x}_{n+1}$ を持つ単体を $\Delta$ と表記する． 
+    ここで，$n$ は $\bm{x}$ の次元数, $f: \mathbb{R}^n \rightarrow \mathbb{R}$ は目的関数を表す．$n$ 次元の空間で $n+1$ 個の頂点からなる単体(シンプレックス)を変形・移動する操作をしながら解を探索する．ここで，頂点 $\bm{x}_1, \bm{x}_2, \dots , \bm{x}_{n+1}$ を持つ単体を $\Delta$ と表記する． 
     
     Nelder-Mead 法は一連の単体を反復的に生成して(\ref{minfx})式の最適点を近似する．各試行で単体の頂点 $\{\bm{x}_j\}_{j=1}^{n+1}$ を(\ref{orderdfx})式のように目的関数値に従って順序付ける．
     \begin{equation}
