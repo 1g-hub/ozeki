@@ -176,7 +176,7 @@ B4 尾關 拓巳
 単目的最適化の場合(Strategy)は(\ref{fitness})式で述べた元の目的関数を $f$, 機器の上下限制約，起動・停止状態などの満たすべき等式・不等式をまとめた制約違反関数を $V$, ペナルティ関数の係数を $\rho$ とすると， Nelder-Mead 法および CMA-ES 上での目的関数 $F$ は(\ref{F})式で表される．
 \begin{equation}
     \label{F}
-    F = f + \frac{\rho}{V-V_{th}}\max(V-V_{th}, 0)
+    F = f + \frac{\rho V}{V-V_{th}}\max(V-V_{th}, 0)
 \end{equation}
 ただし，今回の実験では制約違反関数 $V$ が制約違反関数の閾値 $V_{th} = 1.0 \times 10^{-10}$ より小さい解を実行可能解と定義する．
 
