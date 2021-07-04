@@ -184,7 +184,7 @@ def f_2(x):
 def f(x):   #CMA-ESの関数
     # X = xc_to_x(x)
     V, F = P1.evaluate_f(x)
-    rho = 2.5e3
+    rho = 1.0e4
     if F < 3999000:
         F += 1.0e10
         V += 1.0e10
@@ -329,19 +329,20 @@ def main():
     fig.subplots_adjust(left=0.2)
     plt.yscale('log')
     plt.plot(x, y)
-    plt.xlabel("step, generation")
-    plt.ylabel("f")
-    fig.savefig("img_f.pdf")
+    plt.xlabel("世代", fontname="Noto Serif CJK JP")
+    plt.ylabel("$f$")
+    fig.savefig("img_f.png")
 
     x = np.arange(1, len(vbest)+1)
     y = np.array(vbest)
+
     fig = plt.figure(2)
     fig.subplots_adjust(left=0.2)
     plt.yscale('log')
     plt.plot(x, y)
-    plt.xlabel("step, generation")
-    plt.ylabel("V")
-    fig.savefig("img_V.pdf")
+    plt.xlabel("世代", fontname="Noto Serif CJK JP")
+    plt.ylabel("$V$")
+    fig.savefig("img_V.png")
 
     x = np.arange(1, len(Fbest)+1)
     y = np.array(Fbest)
@@ -350,9 +351,9 @@ def main():
     fig.subplots_adjust(left=0.2)
     plt.yscale('log')
     plt.plot(x, y)
-    plt.xlabel("step, generation")
-    plt.ylabel("F")
-    fig.savefig("img_F.pdf")
+    plt.xlabel("世代", fontname="Noto Serif CJK JP")
+    plt.ylabel("$F$")
+    fig.savefig("img_F.png")
 
 if __name__ == "__main__":
     main()
