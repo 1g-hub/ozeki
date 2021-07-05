@@ -67,7 +67,7 @@ B4 尾關 拓巳
     エネルギープラントでは，ガスタービン，ボイラ，冷凍機など様々な機器を用いて，電力・熱・蒸気などのエネルギーを供給している．エネルギープラント運用計画問題は，各エネルギーの需給バランス，機器の機械的制約，および運用制約を考慮したうえで，電力購入コストとガス購入コストを最小にするような機器の運転状態を計画する問題である．図\ref{energy_plant}に本研究で用いるベンチマーク問題のエネルギープラントの模式図を示す \cite{denki}．
     \begin{figure*}[hbtp]
         \centering
-        \includegraphics[keepaspectratio, scale=0.9]
+        \includegraphics[keepaspectratio, scale=0.7]
             {energy_plant.png}
         \caption{エネルギープラントの模式図(文献\cite{denki}の図3.2.1参照)}
         \label{energy_plant}
@@ -84,11 +84,8 @@ B4 尾關 拓巳
     \end{equation}
     と表される．ここで，$N_t$ はターボ式冷凍機の数，$a_{tj}$は，$j$ 番目のターボ式冷凍機のパラメータ，$a_{ge}$ はガスタービンのパラメータ，$x_{tj}^i$ は 時刻 $i$ における $j$ 番目のターボ式冷凍機の熱生成量，$\bar{E}_L^i$ は時刻 $i$ における電力負荷，$E_{rm}^i$ は時刻 $i$ における電力の残りを表す．
 
-    
-    
     また，起動・停止状態は二時間以上継続しなければ状態を変えられないことや動作している機器の出力の上下限制約など制約条件の詳細は，文献\cite{denki}を参照されたい.
 
-    \subsubsection{問題の特徴}
     本問題は，240 個の変数と 423 個の制約条件を有する大規模な混合整数非線形計画問題として定式化される．決定変数に整数を含む混合整数計画問題であり，目的関数および制約条件に非線形なものを含む非線形計画問題でもあるため，最適解を探索することが困難な問題である．
     
     \subsection{Nelder-Mead 法}
@@ -253,19 +250,19 @@ CMA-ES では $f$ が定めた閾値 $t$ より小さくなった場合に $F$ �
 次に，図\ref{img_F}に最適化をした目的関数 $F$ の推移を，図\ref{img_f}に元の目的関数 $f$ の推移を，図\ref{img_V}に制約違反関数 $V$ の推移を示す．縦軸はそれぞれ $F, f, V$, 横軸は Nelder-Mead 法の試行数と CMA-ES の世代数である．
 \begin{figure}
     \centering
-    \includegraphics[width=8cm]{img_F.png}
+    \includegraphics[width=9cm, height=7cm]{img_F.png}
     \caption{目的関数値 $F$ の推移}
     \label{img_F}
 \end{figure}
 \begin{figure}
     \centering
-    \includegraphics[width=8cm]{img_f.png}
+    \includegraphics[width=9cm, height=7cm]{img_f.png}
     \caption{目的関数値 $f$ の推移}
     \label{img_f}
 \end{figure}
 \begin{figure}
     \centering
-    \includegraphics[width=8cm]{img_V.png}
+    \includegraphics[width=9cm, height=7cm]{img_V.png}
     \caption{制約違反関数 $V$ の推移} 
     \label{img_V}
 \end{figure}

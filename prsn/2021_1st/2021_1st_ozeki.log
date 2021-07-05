@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.2-190908-2.6 (utf8.euc) (TeX Live 2019/Debian) (preloaded format=platex 2020.10.8)  4 JUL 2021 20:19
+This is e-pTeX, Version 3.14159265-p3.8.2-190908-2.6 (utf8.euc) (TeX Live 2019/Debian) (preloaded format=platex 2020.10.8)  5 JUL 2021 10:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -197,27 +197,41 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 76.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
+) [1
+
+
+]
 LaTeX Font Info:    Font shape `JT1/mc/b/n' in size <10> not available
-(Font)              Font shape `JT1/mc/bx/n' tried instead on input line 91.
+(Font)              Font shape `JT1/mc/bx/n' tried instead on input line 121.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 91.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 121.
 LaTeX Font Info:    Font shape `JY1/mc/b/n' in size <10> not available
-(Font)              Font shape `JY1/mc/bx/n' tried instead on input line 91.
+(Font)              Font shape `JY1/mc/bx/n' tried instead on input line 121.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 91.
- [1
-
-
-] [2]
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 121.
+ [2]
 File: img_F.png Graphic file (type bmp)
 <img_F.png>
+
+Overfull \hbox (24.18687pt too wide) in paragraph at lines 253--254
+ [][] 
+ []
+
 File: img_f.png Graphic file (type bmp)
 <img_f.png>
+
+Overfull \hbox (24.18687pt too wide) in paragraph at lines 259--260
+ [][] 
+ []
+
 File: img_V.png Graphic file (type bmp)
 <img_V.png>
- [3]
-(./2021_1st_ozeki.bbl
+
+Overfull \hbox (24.18687pt too wide) in paragraph at lines 265--266
+ [][] 
+ []
+
+[3] (./2021_1st_ozeki.bbl
 
 LaTeX Font Warning: Font shape `JT1/gt/m/it' undefined
 (Font)              using `JT1/gt/m/n' instead on input line 11.
@@ -240,4 +254,4 @@ Here is how much of TeX's memory you used:
  264 hyphenation exceptions out of 8191
  30i,10n,31p,539b,288s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 2021_1st_ozeki.dvi (4 pages, 25700 bytes).
+Output written on 2021_1st_ozeki.dvi (4 pages, 25676 bytes).
